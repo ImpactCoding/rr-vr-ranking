@@ -113,7 +113,7 @@ const vueApp = {
   },
   methods: {
     async refreshData() {
-      const response = await fetch("https://zplwii.xyz/api/groups");
+      const response = await fetch("https://umapyoi.net/api/v1/rr-rooms");
       const rooms = await response.json();
       this.players = []; // Clear the players array before updating it
 
@@ -146,8 +146,7 @@ const vueApp = {
       else if (VR >= 12000 && VR < 15000) return "assets/ranks/Aclass.png";
       else if (VR >= 15000 && VR < 18000) return "assets/ranks/Sclass.png";
       else if (VR >= 18000 && VR < 20000) return "assets/ranks/Rewind.png";
-      else if (VR >= 20000 && VR < 22000)
-        return "assets/ranks/RewindElite.png";
+      else if (VR >= 20000 && VR < 22000) return "assets/ranks/RewindElite.png";
       else if (VR >= 22000 && VR < 25000)
         return "assets/ranks/RewindVeteran.png";
       else if (VR >= 25000 && VR < 28000)
