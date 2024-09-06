@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="javascript.js"></script>
+        <link href="https://www.chadsoft.co.uk/css/ctmkf.css" rel="Stylesheet" type="text/css" />
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="header-placeholder"></div>
+        <div class="header">
+            <div class="logo-container">
+                <img class="logo" src="RetroRewindLogo.png">
+                <div class="logo-addition">Live VR Ranking</div>
+            </div>         
+        </div>
+        <div class="background">
+            <img class="background-image" src="retro_rewind_background.png">
+            <img class="donkeykong" src="DonkeyKong.webp">
+            <img class="peach" src="Peach.webp">
+        </div>
+        
+        <div class="rr-rooms">
+            <div class="tables-container">
+                <div class="current-rank container">
+                    <div class="rank-wrapper">
+                        <img class="rank-image-big" :src="activeRank.image">
+                        <div class="rank-wrapper-container">
+                            <h2 class="rank-title-big" v-html="activeRank.name"></h2>
+                            <div class="vr-range-big">{{ activeRank.range_max }}VR - {{ activeRank.range_min }}VR</span></div>
+                            <div class="player-count">Players: {{ playerCount }}</div>
+                        </div>
+                    </div>
+                    <div class="current-rank-content">
+                        <img class="funkykong" src="FunkyKong.webp">
+                        <div class="help">
+                            <svg xmlns='http://www.w3.org/2000/svg' width='16px' height='16px' viewBox='0 0 24 24'><title>question_line</title><g id="question_line" fill='none'><path d='M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z'/><path fill='#8E8E8EFF' d='M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2m0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16m0 12a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-9.5a3.625 3.625 0 0 1 1.348 6.99.837.837 0 0 0-.305.201c-.044.05-.051.114-.05.18L13 14a1 1 0 0 1-1.993.117L11 14v-.25c0-1.153.93-1.845 1.604-2.116a1.626 1.626 0 1 0-2.229-1.509 1 1 0 1 1-2 0A3.625 3.625 0 0 1 12 6.5'/></g></svg>
+                            <span>How does it work?</span>
+                        </div>
+                            
+                        </div>
+                    </div>        
+                    <table class="container">
+                        <th>Rank</th>
+                        <th>Title</th>
+                        <th>VR</th>
+                        <th>Name</th>
+                        <th>Mii</th>
+                        <th>Friendcode</th>
+                        <tr v-for="(p, index) in activeRank.players">
+                            <td v-html="index + 1"></td>
+                            <td><img width="32" height="32" :src="titleImage(p.ev)"></td>
+                            <td v-html="p.ev"></td>
+                            <td class="mii-name" v-html="p.name"></td>
+                            <td><img width="32" height="32" :src=""></td>
+                            <td v-html="p.fc"></td>
+                        </tr>
+                    </table>
+                    <div class="no-players container">
+                        <div class="no-players-text">
+                            <h2>Seems like there is nobody listed for this rank right now...</h2>
+                            <div>You can choose another rank or chill with <span class="drybones-color">Dry Bones</span> for a while!</div>
+                        </div>
+                        <img class="drybones" src="DryBones.webp">
+                    </div>
+            </div>
+            <div class="rank-select container">
+                <img class="rank-select-background" src="Eggplant.png">
+                <div class="rank-select-heading">
+                    <img class="star" src="Star.webp">
+                    <h2>Filter by Rank</h2>
+                    <img class="star" src="Star.webp">
+                </div>
+                <div class="grid">
+                    <div class="ranks" v-for="(rank, index) in ranks">
+                            <label :for="rank.id" @click="changeRank(index, rank.id, rank.range_min, rank.range_max)">
+                                <input type="radio" name="class-select" class="rank-input" :value="rank.id" :checked="activeRank.id === rank.id">
+                                <img class="rank-image" :src="rank.image">
+                                <div class="rank-text">
+                                    <div class="rank-title" v-html="rank.name"></div>
+                                    <div class="rank-vr">{{ rank.range_max }}<small>VR</small> - {{ rank.range_min }}<small>VR</small></div>
+                                </div>
+                            </label>    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <footer>
+    
+    </footer>
+</html>
