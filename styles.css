@@ -1,13 +1,13 @@
 @font-face {
   font-family: "mariokart";
-  src: url("/assets/fonts/mario_kart_f2.ttf");
+  src: url("assets/fonts/mario_kart_f2.ttf");
 }
 
 body {
   font-family: "CTMKF", sans-serif;
   color: white;
   margin: 0px;
-  cursor: url("/assets/cursors/Normal\ Select.png"), auto !important;
+  cursor: url("assets/cursors/Normal\ Select.png"), auto !important;
 }
 
 .background {
@@ -167,11 +167,11 @@ h2 {
   gap: 16px;
   text-align: left;
   border-radius: 12px;
-  cursor: url("/assets/cursors/Link-Select.png"), auto;
+  cursor: url("assets/cursors/Link-Select.png"), auto;
   box-shadow: inset 0px 0px 8px 0px #ffffff80;
 
   &:has(input:checked) {
-    background: url("/assets/backgrounds/ClassSelectBackground.jpg");
+    background: url("assets/backgrounds/ClassSelectBackground.jpg");
     background-blend-mode: darken;
     background-size: cover;
     background-repeat: no-repeat;
@@ -282,7 +282,7 @@ hr {
   text-decoration: underline;
 
   &:hover {
-    cursor: url("/assets/cursors/Help-Select.png"), auto;
+    cursor: url("assets/cursors/Help-Select.png"), auto;
   }
 
   & span {
