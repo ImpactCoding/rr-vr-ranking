@@ -10,7 +10,7 @@ const vueApp = {
           range_min: 1,
           range_max: 30000,
           players: [],
-          image: "Overall.png",
+          image: "/assets/ranks/Overall.png",
         },
         {
           name: "Rewind Grandmaster",
@@ -18,7 +18,7 @@ const vueApp = {
           range_min: 28000,
           range_max: 30000,
           players: [],
-          image: "RewindGrandmaster.png",
+          image: "/assets/ranks/RewindGrandmaster.png",
         },
         {
           name: "Rewind Master",
@@ -26,7 +26,7 @@ const vueApp = {
           range_min: 25000,
           range_max: 27999,
           players: [],
-          image: "RewindMaster.png",
+          image: "/assets/ranks/RewindMaster.png",
         },
         {
           name: "Rewind Veteran",
@@ -34,7 +34,7 @@ const vueApp = {
           range_min: 22000,
           range_max: 24999,
           players: [],
-          image: "RewindVeteran.png",
+          image: "/assets/ranks/RewindVeteran.png",
         },
         {
           name: "Rewind Elite",
@@ -42,7 +42,7 @@ const vueApp = {
           range_min: 20000,
           range_max: 21999,
           players: [],
-          image: "RewindElite.png",
+          image: "/assets/ranks/RewindElite.png",
         },
         {
           name: "Rewind",
@@ -50,7 +50,7 @@ const vueApp = {
           range_min: 18000,
           range_max: 19999,
           players: [],
-          image: "Rewind.png",
+          image: "/assets/ranks/Rewind.png",
         },
         {
           name: "Class S",
@@ -58,7 +58,7 @@ const vueApp = {
           range_min: 15000,
           range_max: 17999,
           players: [],
-          image: "Sclass.png",
+          image: "/assets/ranks/Sclass.png",
         },
         {
           name: "Class A",
@@ -66,7 +66,7 @@ const vueApp = {
           range_min: 12000,
           range_max: 14999,
           players: [],
-          image: "Aclass.png",
+          image: "/assets/ranks/Aclass.png",
         },
         {
           name: "Class B",
@@ -74,7 +74,7 @@ const vueApp = {
           range_min: 10000,
           range_max: 11999,
           players: [],
-          image: "Bclass.png",
+          image: "/assets/ranks/Bclass.png",
         },
         {
           name: "Class C",
@@ -82,7 +82,7 @@ const vueApp = {
           range_min: 8000,
           range_max: 9999,
           players: [],
-          image: "Cclass.png",
+          image: "/assets/ranks/Cclass.png",
         },
         {
           name: "Class D",
@@ -90,7 +90,7 @@ const vueApp = {
           range_min: 6000,
           range_max: 7999,
           players: [],
-          image: "Dclass.png",
+          image: "/assets/ranks/Dclass.png",
         },
         {
           name: "Learner's Permit",
@@ -98,7 +98,7 @@ const vueApp = {
           range_min: 1,
           range_max: 5999,
           players: [],
-          image: "Learner.png",
+          image: "/assets/ranks/Learner.png",
         },
       ],
       activeRank: {
@@ -107,7 +107,7 @@ const vueApp = {
         range_min: 1,
         range_max: 30000,
         players: [],
-        image: "Crown.webp",
+        image: "",
       },
     };
   },
@@ -139,17 +139,20 @@ const vueApp = {
     },
 
     titleImage(VR) {
-      if (VR < 6000) return "Learner.png";
-      else if (VR >= 6000 && VR < 8000) return "Dclass.png";
-      else if (VR >= 8000 && VR < 10000) return "Cclass.png";
-      else if (VR >= 10000 && VR < 12000) return "Bclass.png";
-      else if (VR >= 12000 && VR < 15000) return "Aclass.png";
-      else if (VR >= 15000 && VR < 18000) return "Sclass.png";
-      else if (VR >= 18000 && VR < 20000) return "Rewind.png";
-      else if (VR >= 20000 && VR < 22000) return "RewindElite.png";
-      else if (VR >= 22000 && VR < 25000) return "RewindVeteran.png";
-      else if (VR >= 25000 && VR < 28000) return "RewindMaster.png";
-      else return "RewindGrandmaster.png";
+      if (VR < 6000) return "/assets/ranks/Learner.png";
+      else if (VR >= 6000 && VR < 8000) return "/assets/ranks/Dclass.png";
+      else if (VR >= 8000 && VR < 10000) return "/assets/ranks/Cclass.png";
+      else if (VR >= 10000 && VR < 12000) return "/assets/ranks/Bclass.png";
+      else if (VR >= 12000 && VR < 15000) return "/assets/ranks/Aclass.png";
+      else if (VR >= 15000 && VR < 18000) return "/assets/ranks/Sclass.png";
+      else if (VR >= 18000 && VR < 20000) return "/assets/ranks/Rewind.png";
+      else if (VR >= 20000 && VR < 22000)
+        return "/assets/ranks/RewindElite.png";
+      else if (VR >= 22000 && VR < 25000)
+        return "/assets/ranks/RewindVeteran.png";
+      else if (VR >= 25000 && VR < 28000)
+        return "/assets/ranks/RewindMaster.png";
+      else return "/assets/ranks/RewindGrandmaster.png";
     },
 
     changeRank(index) {
