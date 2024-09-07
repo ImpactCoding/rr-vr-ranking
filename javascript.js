@@ -158,6 +158,25 @@ const vueApp = {
       this.activeRank = this.ranks[index];
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
+
+    createImg(base64String) {
+      const binaryString = window.atob(base64String);
+      const len = binaryString.length;
+      const bytes = new Uint8Array(len);
+
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+
+      // Create a Blob from the byte array
+      const blob = new Blob([bytes], { type: "image/png" });
+
+      // Create an object URL from the Blob
+      const url = URL.createObjectURL(blob);
+
+      // Set the image source to the object URL
+      return url;
+    },
   },
 
   created() {
