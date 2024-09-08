@@ -136,6 +136,8 @@ const vueApp = {
           (p) => p.ev >= rank.range_min && p.ev <= rank.range_max
         );
       });
+
+      this.fetchMiis();
     },
 
     titleImage(VR) {
@@ -159,67 +161,31 @@ const vueApp = {
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
 
-    base64toBlob(data) {
-      const bytes = atob(data);
-      let length = bytes.length;
-      let out = new Uint8Array(length);
+    async fetchMiis() {
+      const miiDataList = [];
+      this.activeRank.players.forEach((player) =>
+        miiDataList.push(player.mii[0])
+      );
+      console.log(miiDataList);
 
-      while (length--) {
-        out[length] = bytes.charCodeAt(length);
+      const mii_data_response = await fetch("https://umapyoi.net/api/v1/mii", {
+        method: "POST",
+        body: JSON.stringify(miiDataList),
+      });
+
+      if (!mii_data_response.ok) {
+        console.log("Error fetching Mii data from umapyoi.net");
+        return;
       }
 
-      return new Blob([out]);
-    },
+      console.log(mii_data_response);
 
-    async fetchImgAsBase64(url) {
-      try {
-        const response = await fetch(url);
+      const mii_dict = await mii_data_response.json();
 
-        if (!response.ok) return null;
+      console.log(mii_dict);
 
-        return btoa(
-          String.fromCharCode(...new Uint8Array(await response.arrayBuffer()))
-        );
-      } catch {
-        return null;
-      }
-    },
-
-    async getMii(miiData, friendcode) {
-      const fc = friendcode;
-      const data = miiData;
-      console.log(data);
-      console.log(fc);
-
-      const formData = new FormData();
-      formData.append("data", this.base64toBlob(data), "mii.dat");
-      formData.append("platform", "wii");
-
-      try {
-        // fc is used to cache responses on the server
-        const response = await fetch(
-          "https://qrcode.rc24.xyz/cgi-bin/studio.cgi",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-
-        if (!response.ok) return [fc, null];
-
-        const json = await response.json();
-
-        if (!json || !json.mii) return [fc, null];
-
-        const miiImageUrl = `https://studio.mii.nintendo.com/miis/image.png?data=${json.mii}&type=face&expression=normal&width=270&bgColor=FFFFFF00&clothesColor=default&cameraXRotate=0&cameraYRotate=0&cameraZRotate=0&characterXRotate=0&characterYRotate=0&characterZRotate=0&lightDirectionMode=none&instanceCount=1&instanceRotationMode=model`;
-
-        const b64 = await this.fetchImgAsBase64(miiImageUrl);
-
-        responseByFc[fc] = b64;
-
-        return [fc, b64];
-      } catch {
-        return [fc, null];
+      for (const mii_data of Object.keys(mii_dict)) {
+        apply_mii_image(mii_data, mii_dict[mii_data]);
       }
     },
   },
@@ -252,3 +218,39 @@ document.addEventListener("DOMContentLoaded", function () {
   Vue.createApp(vueApp).mount(".rr-rooms");
   headerPosition();
 });
+
+const object = [
+  {
+    data: "ABYwrDDBMOAwwQBCAGkAbABsAHkASH5AgAAAAAAAAADMBVeBcRDKYjhpCmpnRbEPAIoAiiUFAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    name: "ガチムチBillyH",
+  },
+  {
+    data: "gBIAagBhAGsAZQAAAAAAAAAAAAAAAH4qgAAAAAAAAABkHmJAcRYoojyMCFh0RaiNAIoCiiUEAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    name: "jake",
+  },
+];
+
+fetchMiis(object);
+
+async function fetchMiis(object) {
+  console.log(object);
+  const mii_data_response = await fetch("https://umapyoi.net/api/v1/mii", {
+    method: "POST",
+    body: JSON.stringify(object),
+  });
+
+  if (!mii_data_response.ok) {
+    console.log("Error fetching Mii data from umapyoi.net");
+    return;
+  }
+
+  console.log(mii_data_response);
+
+  const mii_dict = await mii_data_response.json();
+
+  console.log(mii_dict);
+
+  for (const mii_data of Object.keys(mii_dict)) {
+    apply_mii_image(mii_data, mii_dict[mii_data]);
+  }
+}
