@@ -162,7 +162,10 @@ const vueApp = {
     },
 
     async fetchMiis() {
-      const miiDataList = this.players.map((player) => player.mii[0]);
+      const miiDataList = [];
+      this.activeRank.players.forEach((player) =>
+        miiDataList.push(player.mii[0])
+      );
       console.log(miiDataList);
 
       const mii_data_response = await fetch("https://umapyoi.net/api/v1/mii", {
@@ -174,6 +177,8 @@ const vueApp = {
         console.log("Error fetching Mii data from umapyoi.net");
         return;
       }
+
+      console.log(mii_data_response);
 
       const mii_dict = await mii_data_response.json();
 
@@ -213,3 +218,39 @@ document.addEventListener("DOMContentLoaded", function () {
   Vue.createApp(vueApp).mount(".rr-rooms");
   headerPosition();
 });
+
+const object = [
+  {
+    data: "ABYwrDDBMOAwwQBCAGkAbABsAHkASH5AgAAAAAAAAADMBVeBcRDKYjhpCmpnRbEPAIoAiiUFAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    name: "ガチムチBillyH",
+  },
+  {
+    data: "gBIAagBhAGsAZQAAAAAAAAAAAAAAAH4qgAAAAAAAAABkHmJAcRYoojyMCFh0RaiNAIoCiiUEAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    name: "jake",
+  },
+];
+
+fetchMiis(object);
+
+async function fetchMiis(object) {
+  console.log(object);
+  const mii_data_response = await fetch("https://umapyoi.net/api/v1/mii", {
+    method: "POST",
+    body: JSON.stringify(object),
+  });
+
+  if (!mii_data_response.ok) {
+    console.log("Error fetching Mii data from umapyoi.net");
+    return;
+  }
+
+  console.log(mii_data_response);
+
+  const mii_dict = await mii_data_response.json();
+
+  console.log(mii_dict);
+
+  for (const mii_data of Object.keys(mii_dict)) {
+    apply_mii_image(mii_data, mii_dict[mii_data]);
+  }
+}
