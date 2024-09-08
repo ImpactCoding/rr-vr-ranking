@@ -164,7 +164,7 @@ const vueApp = {
     async fetchMiis() {
       const miiDataList = [];
       this.activeRank.players.forEach((player) =>
-        miiDataList.push(player.mii[0])
+        miiDataList.push(player.mii[0].data)
       );
       console.log(miiDataList);
 
