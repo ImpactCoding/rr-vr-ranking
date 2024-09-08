@@ -55,7 +55,7 @@
                             <td><img width="32" height="32" :src="titleImage(p.ev)"></td>
                             <td v-html="p.ev"></td>
                             <td class="mii-name" v-html="p.name"></td>
-                            <td><img width="32" height="32" :src="createImg(p.mii[0].data)"></td>
+                            <td><img width="32" height="32" :src="getMii(p.mii[0].data, p.fc)"></td>
                             <td v-html="p.fc"></td>
                         </tr>
                     </table>
