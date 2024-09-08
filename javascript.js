@@ -2,7 +2,7 @@ const vueApp = {
   name: "Vue Schema Creator",
   data() {
     return {
-      loading: true,
+      loading: false,
       players: [],
       ranks: [
         {
@@ -183,7 +183,6 @@ const vueApp = {
       // var mii_arr = Object.keys(mii_dict).map((key) => mii_dict[key]);
 
       this.players.forEach((player) => {
-        console.log(player.mii[0].data);
         player.mii[0].data = mii_dict[player.mii[0].data];
       });
     },
@@ -195,7 +194,7 @@ const vueApp = {
 
   mounted() {
     this.refreshData();
-    setInterval(this.refreshData, 10000); // Refresh data every 10 seconds if needed
+    setInterval(this.refreshData, 20000); // Refresh data every 10 seconds if needed
   },
 
   computed: {
