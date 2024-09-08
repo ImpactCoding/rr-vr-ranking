@@ -2,6 +2,7 @@ const vueApp = {
   name: "Vue Schema Creator",
   data() {
     return {
+      loading: true,
       players: [],
       ranks: [
         {
@@ -113,6 +114,7 @@ const vueApp = {
   },
   methods: {
     async refreshData() {
+      this.loading = true;
       const response = await fetch("https://umapyoi.net/api/v1/rr-rooms");
       const rooms = await response.json();
       this.players = []; // Clear the players array before updating it
@@ -138,6 +140,7 @@ const vueApp = {
           (p) => p.ev >= rank.range_min && p.ev <= rank.range_max
         );
       });
+      this.loading = false;
     },
 
     titleImage(VR) {
@@ -214,33 +217,3 @@ document.addEventListener("DOMContentLoaded", function () {
   Vue.createApp(vueApp).mount(".rr-rooms");
   headerPosition();
 });
-
-// const object = [
-//   "ABYwrDDBMOAwwQBCAGkAbABsAHkASH5AgAAAAAAAAADMBVeBcRDKYjhpCmpnRbEPAIoAiiUFAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
-//   "gBIAagBhAGsAZQAAAAAAAAAAAAAAAH4qgAAAAAAAAABkHmJAcRYoojyMCFh0RaiNAIoCiiUEAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
-// ];
-
-// fetchMiis(object);
-
-// async function fetchMiis(object) {
-//   console.log(object);
-//   const mii_data_response = await fetch("https://umapyoi.net/api/v1/mii", {
-//     method: "POST",
-//     body: JSON.stringify(object),
-//   });
-
-//   if (!mii_data_response.ok) {
-//     console.log("Error fetching Mii data from umapyoi.net");
-//     return;
-//   }
-
-//   console.log(mii_data_response);
-
-//   const mii_dict = await mii_data_response.json();
-
-//   console.log(mii_dict);
-
-//   for (const mii_data of Object.keys(mii_dict)) {
-//     apply_mii_image(mii_data, mii_dict[mii_data]);
-//   }
-// }
