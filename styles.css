@@ -332,6 +332,8 @@ td {
   border: 1px solid black;
   min-width: 60px;
   white-space: nowrap;
+  max-width: 200px;
+  overflow: hidden;
 }
 
 td img {

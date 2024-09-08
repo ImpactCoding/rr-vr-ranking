@@ -158,6 +158,70 @@ const vueApp = {
       this.activeRank = this.ranks[index];
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
+
+    base64toBlob(data) {
+      const bytes = atob(data);
+      let length = bytes.length;
+      let out = new Uint8Array(length);
+
+      while (length--) {
+        out[length] = bytes.charCodeAt(length);
+      }
+
+      return new Blob([out]);
+    },
+
+    async fetchImgAsBase64(url) {
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) return null;
+
+        return btoa(
+          String.fromCharCode(...new Uint8Array(await response.arrayBuffer()))
+        );
+      } catch {
+        return null;
+      }
+    },
+
+    async getMii(miiData, friendcode) {
+      const fc = friendcode;
+      const data = miiData;
+      console.log(data);
+      console.log(fc);
+
+      const formData = new FormData();
+      formData.append("data", this.base64toBlob(data), "mii.dat");
+      formData.append("platform", "wii");
+
+      try {
+        // fc is used to cache responses on the server
+        const response = await fetch(
+          "https://qrcode.rc24.xyz/cgi-bin/studio.cgi",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        if (!response.ok) return [fc, null];
+
+        const json = await response.json();
+
+        if (!json || !json.mii) return [fc, null];
+
+        const miiImageUrl = `https://studio.mii.nintendo.com/miis/image.png?data=${json.mii}&type=face&expression=normal&width=270&bgColor=FFFFFF00&clothesColor=default&cameraXRotate=0&cameraYRotate=0&cameraZRotate=0&characterXRotate=0&characterYRotate=0&characterZRotate=0&lightDirectionMode=none&instanceCount=1&instanceRotationMode=model`;
+
+        const b64 = await this.fetchImgAsBase64(miiImageUrl);
+
+        responseByFc[fc] = b64;
+
+        return [fc, b64];
+      } catch {
+        return [fc, null];
+      }
+    },
   },
 
   created() {
