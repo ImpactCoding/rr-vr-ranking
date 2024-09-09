@@ -120,7 +120,7 @@ const vueApp = {
       this.players = []; // Clear the players array before updating it
 
       // Iterate through each room and add players to the array
-      rooms.forEach((room) => {
+      await rooms.forEach((room) => {
         this.players.push(...Object.values(room.players));
       });
 
