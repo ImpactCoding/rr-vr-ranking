@@ -283,5 +283,3 @@ async function updateFile() {
     console.error("Error:", error);
   }
 }
-
-updateFile();
