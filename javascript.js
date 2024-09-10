@@ -167,7 +167,7 @@ const vueApp = {
     async fetchMiis() {
       const miiDataList = [];
       this.players.forEach((player) => {
-        if (player.mii[0]) miiDataList.push(player.mii[0].data);
+        if (player.mii[0].data) miiDataList.push(player.mii[0].data);
       });
 
       const mii_data_response = await fetch("https://umapyoi.net/api/v1/mii", {
