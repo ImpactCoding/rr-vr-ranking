@@ -3,6 +3,7 @@ const vueApp = {
   data() {
     return {
       loading: false,
+      highlight_fc: "",
       players: [],
       ranks: [
         {
@@ -115,25 +116,20 @@ const vueApp = {
   methods: {
     async refreshData() {
       this.loading = true;
-      const response = await fetch("https://umapyoi.net/api/v1/rr-rooms");
-      const rooms = await response.json();
-      this.players = []; // Clear the players array before updating it
-
-      // Iterate through each room and add players to the array
-      await rooms.forEach((room) => {
-        this.players.push(...Object.values(room.players));
-      });
-
-      this.players = this.players.filter(
-        (player) => player.ev !== undefined && player.ev !== null
+      const response = await fetch(
+        "https://impactcoding.github.io/rr-player-database/rr-players.json"
       );
+      const playerData = await response.json();
+
+      this.players = [];
+      for (player in playerData) {
+        this.players.push(playerData[player]);
+      }
 
       // Sort the players array by ev value in descending order
       this.players.sort((a, b) => {
         return parseInt(b.ev, 10) - parseInt(a.ev, 10); // Sort by ev descending
       });
-
-      await this.fetchMiis();
 
       this.ranks.forEach((rank) => {
         rank.players = this.players.filter(
@@ -164,29 +160,18 @@ const vueApp = {
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
 
-    async fetchMiis() {
-      const miiDataList = [];
-      this.players.forEach((player) => {
-        if (player.mii[0].data) miiDataList.push(player.mii[0].data);
-      });
+    miiImage(player) {
+      if (player.mii) {
+        if (player.mii[0].data.includes("base64")) return player.mii[0].data;
+        else return "assets/sprites/questionMark.png";
+      } else return "assets/sprites/questionMark.png";
+    },
 
-      const mii_data_response = await fetch("https://umapyoi.net/api/v1/mii", {
-        method: "POST",
-        body: JSON.stringify(miiDataList),
-      });
-
-      if (!mii_data_response.ok) {
-        console.log("Error fetching Mii data from umapyoi.net");
-        return;
-      }
-
-      const mii_dict = await mii_data_response.json();
-
-      // var mii_arr = Object.keys(mii_dict).map((key) => mii_dict[key]);
-
-      this.players.forEach((player) => {
-        player.mii[0].data = mii_dict[player.mii[0].data];
-      });
+    searchFC() {
+      const tableRow = document.querySelector("tr[style]");
+      if (tableRow)
+        tableRow.scrollIntoView({ block: "end", behavior: "smooth" });
+      localStorage.setItem("rrfc", this.highlight_fc);
     },
   },
 
@@ -196,7 +181,8 @@ const vueApp = {
 
   mounted() {
     this.refreshData();
-    setInterval(this.refreshData, 20000); // Refresh data every 10 seconds if needed
+    setInterval(this.refreshData, 180000);
+    this.highlight_fc = localStorage.getItem("rrfc");
   },
 
   computed: {
