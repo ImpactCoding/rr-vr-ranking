@@ -385,6 +385,7 @@ table {
     margin: 1px;
     border-radius: 14px;
     box-shadow: inset 0px 0px 8px 0px #f7f7f7;
+    pointer-events: none;
   }
 }
 
@@ -436,10 +437,6 @@ table {
     width: 20px;
     padding-left: 8px;
     border-left: 1px solid #303030;
-
-    &:hover {
-      cursor: url("assets/cursors/Link-Select.png"), auto;
-    }
   }
 
   & span {
@@ -457,12 +454,12 @@ table {
     color: white;
     min-width: 160px;
 
-    &:hover {
-      /* cursor: url("assets/cursors/Handwriting.png"), pointer !important; */
-    }
-
     &::placeholder {
       color: #616161;
     }
   }
+}
+
+.highlight-fc:has(input:placeholder-shown) svg:hover {
+  cursor: url("assets/cursors/Unavailable.png"), auto;
 }
