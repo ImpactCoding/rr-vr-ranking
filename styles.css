@@ -427,6 +427,7 @@ table {
   display: flex;
   gap: 8px;
   position: relative;
+  float: left;
 
   & svg {
     position: absolute;
@@ -462,4 +463,8 @@ table {
 
 .highlight-fc:has(input:placeholder-shown) svg:hover {
   cursor: url("assets/cursors/Unavailable.png"), auto;
+}
+
+.last-refresh {
+  width: fit-content;
 }

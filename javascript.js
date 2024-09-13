@@ -3,7 +3,8 @@ const vueApp = {
   data() {
     return {
       loading: false,
-      date: "",
+      date: Date.now(),
+      last_refresh: "",
       highlight_fc: "",
       players: [],
       ranks: [
@@ -116,12 +117,12 @@ const vueApp = {
   },
   methods: {
     async refreshData() {
-      this.date = Date.now();
       this.loading = true;
       const response = await fetch(
         "https://impactcoding.github.io/rr-player-database/rr-players.json"
       );
       const playerData = await response.json();
+      this.last_refresh = playerData.last_refresh;
       this.players = [];
       for (player in playerData) {
         this.players.push(playerData[player]);
@@ -178,7 +179,6 @@ const vueApp = {
     returnTime(unixTime) {
       timeDiff = this.date - unixTime;
       const minutes = Math.round(timeDiff / (1000 * 60));
-      if (minutes < 8) return "<span style='color: #5edd5f'>Online</span>";
       if (minutes < 60) return minutes + " minutes ago";
       const hours = Math.round(timeDiff / (1000 * 60 * 60));
       if (hours < 24) return hours + " hours ago";
