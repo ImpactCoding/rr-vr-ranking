@@ -56,13 +56,15 @@
                         <th>Name</th>
                         <th>Mii</th>
                         <th>Friendcode</th>
-                        <tr v-for="(p, index) in activeRank.players.filter((player, index) => index < 100)" :style="{ background: p.fc === highlight_fc ? '#5edd5f' : '' }">
+                        <th>Status</th>
+                        <tr v-for="(p, index) in activeRank.players.filter((player, index) => index < 500)" :style="{ background: p.fc === highlight_fc ? '#5edd5f' : '' }">
                             <td v-html="index + 1"></td>
                             <td><img width="32" height="32" :src="titleImage(p.ev)"></td>
                             <td v-html="p.ev"></td>
                             <td class="mii-name" v-html="p.name"></td>
                             <td><img width="32" height="32" :src="miiImage(p)"></td>
                             <td v-html="p.fc"></td>
+                            <td v-html="calculateStatus(p.lastupdated)"></td>
                         </tr>
                     </table>
                     <div class="no-players container">

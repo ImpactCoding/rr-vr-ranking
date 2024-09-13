@@ -3,6 +3,7 @@ const vueApp = {
   data() {
     return {
       loading: false,
+      date: "",
       highlight_fc: "",
       players: [],
       ranks: [
@@ -115,12 +116,12 @@ const vueApp = {
   },
   methods: {
     async refreshData() {
+      this.date = Date.now();
       this.loading = true;
       const response = await fetch(
         "https://impactcoding.github.io/rr-player-database/rr-players.json"
       );
       const playerData = await response.json();
-
       this.players = [];
       for (player in playerData) {
         this.players.push(playerData[player]);
@@ -172,6 +173,11 @@ const vueApp = {
       if (tableRow)
         tableRow.scrollIntoView({ block: "end", behavior: "smooth" });
       localStorage.setItem("rrfc", this.highlight_fc);
+    },
+
+    calculateStatus(unixTime) {
+      timeDiff = this.date - unixTime;
+      return Math.round(timeDiff / (1000 * 60));
     },
   },
 
