@@ -2,10 +2,15 @@ const vueApp = {
   name: "Vue Schema Creator",
   data() {
     return {
-      loading: false,
-      date: Date.now(),
+      date: "",
       last_refresh: "",
       highlight_fc: "",
+      settings: {
+        open: false,
+        params: {
+          night_mode: true,
+        },
+      },
       players: [],
       ranks: [
         {
@@ -117,12 +122,12 @@ const vueApp = {
   },
   methods: {
     async refreshData() {
-      this.loading = true;
       const response = await fetch(
         "https://impactcoding.github.io/rr-player-database/rr-players.json"
       );
       const playerData = await response.json();
       this.last_refresh = playerData.last_refresh;
+      this.date = Date.now();
       this.players = [];
       for (player in playerData) {
         this.players.push(playerData[player]);
@@ -138,7 +143,6 @@ const vueApp = {
           (p) => p.ev >= rank.range_min && p.ev <= rank.range_max
         );
       });
-      this.loading = false;
     },
 
     titleImage(VR) {
@@ -179,13 +183,17 @@ const vueApp = {
     returnTime(unixTime) {
       timeDiff = this.date - unixTime;
       const minutes = Math.round(timeDiff / (1000 * 60));
-      if (minutes < 60) return minutes + " minutes ago";
+      if (minutes < 60) return minutes + "min ago";
       const hours = Math.round(timeDiff / (1000 * 60 * 60));
-      if (hours < 24) return hours + " hours ago";
+      if (hours < 24) return hours + "h ago";
       const days = Math.round(timeDiff / (1000 * 60 * 60 * 24));
-      if (days < 7) return days + " days ago";
-      else
-        return Math.round(timeDiff / (1000 * 60 * 60 * 24 * 7)) + " weeks ago";
+      if (days < 7) return days + "d ago";
+      else return Math.round(timeDiff / (1000 * 60 * 60 * 24 * 7)) + "w ago";
+    },
+
+    openSettings() {
+      this.settings.open = true;
+      console.log("hello");
     },
   },
 
@@ -195,7 +203,7 @@ const vueApp = {
 
   mounted() {
     this.refreshData();
-    setInterval(this.refreshData, 180000);
+    setInterval(this.refreshData, 60000);
     this.highlight_fc = localStorage.getItem("rrfc");
   },
 
