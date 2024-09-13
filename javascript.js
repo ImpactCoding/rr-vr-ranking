@@ -123,7 +123,6 @@ const vueApp = {
       );
       const playerData = await response.json();
       this.last_refresh = playerData.last_refresh;
-      this.date = Date.now();
       this.players = [];
       for (player in playerData) {
         this.players.push(playerData[player]);
@@ -192,6 +191,7 @@ const vueApp = {
 
   created() {
     this.changeRank(0);
+    this.date = Date.now();
   },
 
   mounted() {
