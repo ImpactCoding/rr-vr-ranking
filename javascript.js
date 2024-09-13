@@ -3,7 +3,7 @@ const vueApp = {
   data() {
     return {
       loading: false,
-      date: "",
+      date: Date.now(),
       last_refresh: "61461",
       highlight_fc: "",
       players: [],
@@ -191,7 +191,6 @@ const vueApp = {
 
   created() {
     this.changeRank(0);
-    this.date = Date.now();
   },
 
   mounted() {
