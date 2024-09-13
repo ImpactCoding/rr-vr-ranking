@@ -3,7 +3,7 @@ const vueApp = {
   data() {
     return {
       loading: false,
-      date: Date.now(),
+      date: "",
       last_refresh: "",
       highlight_fc: "",
       players: [],
@@ -123,6 +123,7 @@ const vueApp = {
       );
       const playerData = await response.json();
       this.last_refresh = playerData.last_refresh;
+      this.date = Date.now();
       this.players = [];
       for (player in playerData) {
         this.players.push(playerData[player]);
