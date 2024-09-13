@@ -175,9 +175,17 @@ const vueApp = {
       localStorage.setItem("rrfc", this.highlight_fc);
     },
 
-    calculateStatus(unixTime) {
+    returnTime(unixTime) {
       timeDiff = this.date - unixTime;
-      return Math.round(timeDiff / (1000 * 60));
+      const minutes = Math.round(timeDiff / (1000 * 60));
+      if (minutes < 8) return "<span style='color: #5edd5f'>Online</span>";
+      if (minutes < 60) return minutes + " minutes ago";
+      const hours = Math.round(timeDiff / (1000 * 60 * 60));
+      if (hours < 24) return hours + " hours ago";
+      const days = Math.round(timeDiff / (1000 * 60 * 60 * 24));
+      if (days < 7) return days + " days ago";
+      else
+        return Math.round(timeDiff / (1000 * 60 * 60 * 24 * 7)) + " weeks ago";
     },
   },
 
