@@ -18,7 +18,7 @@
             </div>         
         </div>
         <div class="background">
-            <img class="background-image" src="assets/backgrounds/retro_rewind_background.png" :style="{ filter: settings.params.night_mode ? 'brightness(30%)' : '' }">
+            <img class="background-image" src="assets/backgrounds/retro_rewind_background.png" :style="{ filter: settings.params.night_mode ? 'brightness(30%) !important' : '' }">
             <img class="donkeykong" src="assets/characters/DonkeyKong.webp">
             <img class="peach" src="assets/characters/Peach.webp">
         </div>
@@ -31,7 +31,7 @@
                         <div class="rank-wrapper-container">
                             <h2 class="rank-title-big" v-html="activeRank.name"></h2>
                             <div class="vr-range-big">{{ activeRank.range_max }}VR - {{ activeRank.range_min }}VR</span></div>
-                            <div class="player-count">Players: {{ playerCount }}</div>
+                            <div class="player-count">Players Ranked: {{ playerCount }}</div>
                         </div>
                     </div>
                     <div class="current-rank-content">

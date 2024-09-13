@@ -307,12 +307,15 @@ hr {
 
 .rank-wrapper {
   margin: 0px 32px;
-  width: 60%;
+  width: fit-content;
   display: flex;
   gap: 20px;
   align-items: center;
-  padding: 24px 40px;
-  background: black;
+  padding: 16px 32px;
+  background: url("assets/backgrounds/BackgroundGolden.webp");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   border-radius: 999px;
   box-shadow: inset 0px 0px 8px 0px #ffffff80;
   border: 1px solid #ffffff80;
@@ -327,9 +330,15 @@ hr {
   text-transform: uppercase;
   letter-spacing: 0.1ch;
   font-size: 20px;
+  margin-bottom: 8px;
 }
 
 .vr-range-big {
+  opacity: 0.8;
+}
+
+.player-count {
+  opacity: 0.8;
 }
 
 th {
