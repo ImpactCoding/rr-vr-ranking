@@ -4,7 +4,7 @@ const vueApp = {
     return {
       loading: false,
       date: Date.now(),
-      last_refresh: "61461",
+      last_refresh: "",
       highlight_fc: "",
       players: [],
       ranks: [
