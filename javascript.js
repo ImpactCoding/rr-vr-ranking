@@ -5,11 +5,38 @@ const vueApp = {
       date: "",
       last_refresh: "",
       highlight_fc: "",
+      faq: {
+        open: "",
+        tabs: [
+          {
+            heading: "How can I get on the Leaderboard?",
+            content:
+              "To entry the leaderboard, you have to start your license at <b>5000 VR or lower</b> to avoid people hacking VR. Also, your VR progress will be tracked and you will get banned and end up in the <a href='hallOfShame.html'><b>Hall of Shame</b></a> if you manipulate your VR.",
+          },
+          {
+            heading:
+              "Why am I not on the leaderboard even though I followed the rules?",
+            content:
+              "Data refreshing might be delayed sometimes due to high traffic or other factors. This can potentially mess up the banning or entry creation system.<br>If your profile is not shown as it should, contact me <a href='https://discordapp.com/channels/@me/342736380163653633/'>here</a>.",
+          },
+          {
+            heading:
+              "I can't highlight my FC event though I typed it correctly",
+            content:
+              "If your profile is ranked for the current rank you selected, the search field border will turn green. Make sure you remove white space or try the overall category. Also, try to set the maximum amount of players per table to 500 in settings.",
+          },
+          {
+            heading: "How does this page work?",
+            content:
+              "All data is collected from the Rooms API, stored and analysed by a script.",
+          },
+        ],
+      },
       settings: {
         open: false,
         params: {
-          dark_mode: false,
-          max_players: 500,
+          dark_mode: localStorage.getItem("dark_mode"),
+          max_players: localStorage.getItem("max_players") || 100,
         },
       },
       players: [],
@@ -192,9 +219,15 @@ const vueApp = {
       else return Math.round(timeDiff / (1000 * 60 * 60 * 24 * 7)) + "w ago";
     },
 
+    returnDate(unixTime) {
+      if (unixTime) {
+        const date = new Date(unixTime).toLocaleDateString("en-US");
+        return date;
+      } else return "-";
+    },
+
     openSettings() {
       this.settings.open = !this.settings.open;
-      console.log("hello");
     },
 
     checkInput() {
@@ -208,10 +241,22 @@ const vueApp = {
       document.querySelector(".highlight-fc input").style.border =
         "1px solid #c90000";
     },
+
+    setLocalStorage(item) {
+      localStorage.setItem(item, this.settings.params[item]);
+    },
+
+    toggleFAQ(i) {
+      console.log(i);
+      if (this.faq.open === i) {
+        this.faq.open = "";
+      } else this.faq.open = i;
+    },
   },
 
   created() {
     this.changeRank(0);
+    console.log(localStorage);
   },
 
   mounted() {

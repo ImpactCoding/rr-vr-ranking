@@ -573,6 +573,10 @@ table {
   }
 }
 
+.faq-tab:not(:last-child) {
+  margin-bottom: 16px;
+}
+
 .accordion {
   display: grid;
   grid-template-rows: 0fr;

@@ -22,7 +22,7 @@
 
         <!-- Background -->
         <div class="background">
-            <img :class="{'background-image': true, 'night_mode': settings.params.dark_mode}"  src="assets/backgrounds/retro_rewind_background.png">
+            <img :class="{'background-image': true, 'night_mode': settings.params.dark_mode === true || settings.params.dark_mode === 'true' }"  src="assets/backgrounds/retro_rewind_background.png">
             <img class="donkeykong" src="assets/characters/DonkeyKong.webp">
             <img class="peach" src="assets/characters/Peach.webp">
         </div>
@@ -74,8 +74,8 @@
                 </div>
                 <div class="accordion settings-container">
                 <div :class="{ 'accordion-content': true, 'accordion-open': settings.open }">
-                    <div class="setting"><input type="checkbox" v-model="settings.params.dark_mode">Dark mode</div>
-                    <div class="setting"><input type="range" min="25" max="500" v-model="settings.params.max_players">Max. players per table</div>
+                    <div class="setting"><input type="checkbox" v-model="settings.params.dark_mode" @change="setLocalStorage('dark_mode')">Dark mode</div>
+                    <div class="setting"><input type="range" min="10" max="500" step="10" v-model="settings.params.max_players" @change="setLocalStorage('max_players')">Max. players per table</div>
                 </div>
                 </div>
             </div>
@@ -91,7 +91,7 @@
                         <th>Friendcode</th>
                         <th>Last Seen</th>
                         <th>Max VR Date</th>
-                        <tr v-for="(p, index) in activeRank.players.filter((player, index) => index < settings.params.max_players && player.banned === false)" :style="{ background: p.fc === highlight_fc ? '#5edd5f' : '' }">
+                        <tr v-for="(p, index) in activeRank.players.filter((player, index) => index < settings.params.max_players)" :style="{ background: p.fc === highlight_fc ? '#5edd5f' : '' }">
                             <td v-html="index + 1"></td>
                             <td><img width="32" height="32" :src="titleImage(p.ev)"></td>
                             <td v-html="p.ev"></td>
@@ -99,9 +99,12 @@
                             <td><img width="32" height="32" :src="miiImage(p)"></td>
                             <td v-html="p.fc"></td>
                             <td v-html="returnTime(p.lastupdated)"></td>
+                            <td v-html="returnDate(p.first_max_vr)"></td>
                         </tr>
                     </table>
                 </div>
+
+                <!-- No Players Ranked -->
                     <div class="no-players container">
                         <div class="no-players-text">
                             <h2>Seems like there is nobody listed for this rank right now...</h2>
@@ -109,6 +112,21 @@
                         </div>
                         <img class="drybones" src="assets/characters/DryBones.webp">
                     </div>
+
+                <!-- FAQ -->
+                 <div class="container">
+                    <div class="faq-heading">
+                        FAQ
+                    </div>
+                    <div class="faq-container">
+                        <div class="faq-tab" v-for="(tab, index) in faq.tabs">
+                            <div class="accordion-heading" v-html="tab.heading" @click="toggleFAQ(index)"></div>
+                            <div class="accordion">
+                                <div :class="{ 'accordion-content': true, 'accordion-open': faq.open === index }" v-html="tab.content"></div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
             </div>
         </div>
     </body>
