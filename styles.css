@@ -575,6 +575,9 @@ table {
 
 .faq-tab:not(:last-child) {
   margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background: black;
 }
 
 .accordion {
