@@ -8,8 +8,8 @@ const vueApp = {
       settings: {
         open: false,
         params: {
-          dark_mode: true,
-          max_players: 100,
+          dark_mode: false,
+          max_players: 500,
         },
       },
       players: [],
