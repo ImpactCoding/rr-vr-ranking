@@ -196,6 +196,18 @@ const vueApp = {
       this.settings.open = !this.settings.open;
       console.log("hello");
     },
+
+    checkInput() {
+      this.activeRank.players.forEach((player) => {
+        if (this.highlight_fc === player.fc) {
+          document.querySelector(".highlight-fc input").style.border =
+            "1px solid #5edd5f";
+          exit;
+        }
+      });
+      document.querySelector(".highlight-fc input").style.border =
+        "1px solid #c90000";
+    },
   },
 
   created() {
@@ -206,6 +218,12 @@ const vueApp = {
     this.refreshData();
     setInterval(this.refreshData, 60000);
     this.highlight_fc = localStorage.getItem("rrfc");
+  },
+
+  watch: {
+    highlight_fc() {
+      setTimeout(this.checkInput, 200);
+    },
   },
 
   computed: {
