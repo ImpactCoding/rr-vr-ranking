@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
+        <div class="rr-rooms">
+            <!-- Header -->
         <div class="header-placeholder"></div>
         <div class="header">
             <div class="logo-container">
@@ -17,48 +19,68 @@
                 <div class="logo-addition">Live VR Ranking</div>
             </div>         
         </div>
+
+        <!-- Background -->
         <div class="background">
-            <img class="background-image" src="assets/backgrounds/retro_rewind_background.png" :style="{ filter: settings.params.night_mode ? 'brightness(30%) !important' : '' }">
+            <img :class="{'background-image': true, 'night_mode': settings.params.dark_mode}"  src="assets/backgrounds/retro_rewind_background.png">
             <img class="donkeykong" src="assets/characters/DonkeyKong.webp">
             <img class="peach" src="assets/characters/Peach.webp">
         </div>
-        
-        <div class="rr-rooms">
-            <div class="tables-container">
-                <div class="current-rank container">
-                    <div class="rank-wrapper">
-                        <img class="rank-image-big" :src="activeRank.image">
-                        <div class="rank-wrapper-container">
-                            <h2 class="rank-title-big" v-html="activeRank.name"></h2>
-                            <div class="vr-range-big">{{ activeRank.range_max }}VR - {{ activeRank.range_min }}VR</span></div>
-                            <div class="player-count">Players Ranked: {{ playerCount }}</div>
-                        </div>
+
+        <!-- Start of content -->
+        <div class="content">
+
+            <!-- Rank Select -->
+            <div class="rank-select container">
+                <img class="rank-select-background" src="assets/backgrounds/Eggplant.png">
+                <div class="rank-wrapper">
+                    <img class="rank-image-big" :src="activeRank.image">
+                    <div class="rank-wrapper-container">
+                        <h2 class="rank-title-big" v-html="activeRank.name"></h2>
+                        <div class="vr-range-big">{{ activeRank.range_max }}VR - {{ activeRank.range_min }}VR</span></div>
+                        <div class="player-count">Ranked Players: {{ playerCount }}</div>
                     </div>
-                    <div class="current-rank-content">
-                        <img class="funkykong" src="assets/characters/FunkyKong.webp">
-                        <div class="help">
-                            <svg xmlns='http://www.w3.org/2000/svg' width='16px' height='16px' viewBox='0 0 24 24'><title>question_line</title><g id="question_line" fill='none'><path d='M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z'/><path fill='#8E8E8EFF' d='M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2m0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16m0 12a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-9.5a3.625 3.625 0 0 1 1.348 6.99.837.837 0 0 0-.305.201c-.044.05-.051.114-.05.18L13 14a1 1 0 0 1-1.993.117L11 14v-.25c0-1.153.93-1.845 1.604-2.116a1.626 1.626 0 1 0-2.229-1.509 1 1 0 1 1-2 0A3.625 3.625 0 0 1 12 6.5'/></g></svg>
-                            <span>How does it work?</span>
-                        </div>
-                            
-                        </div>
-                    </div>     
-                <div class="top-bar container">
-                <div class="highlight-fc">
-                    <span>Highlight FC:</span>
-                    <input type="text" v-model="highlight_fc" placeholder="XXXX-YYYY-ZZZZ" @keyup.enter="searchFC()">
-                    <svg @click="searchFC()" xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><title>search_line</title><g id="search_line" fill='none' fill-rule='evenodd'><path d='M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z'/><path :fill="this.highlight_fc === '' ? '#616161' : '#ffffff'" d='M10.5 2a8.5 8.5 0 1 0 5.262 15.176l3.652 3.652a1 1 0 0 0 1.414-1.414l-3.652-3.652A8.5 8.5 0 0 0 10.5 2M4 10.5a6.5 6.5 0 1 1 13 0 6.5 6.5 0 0 1-13 0'/></g></svg>
                 </div>
-                <div class="last-refresh">
-                    <span>Last data refresh: </span>
-                    <span class="yellow-text" v-html="returnTime(this.last_refresh)"></span>
-                </div>
-                <div class="spacer"></div>
-                <div class="settings" @click="openSettings()">
-                    <span>Settings</span>
-                    <img width="20" height="20" src="assets/sprites/GalaxyMushroom.png">
+                <div class="grid">
+                    <div class="ranks" v-for="(rank, index) in ranks">
+                        <label :for="rank.id" @click="changeRank(index, rank.id, rank.range_min, rank.range_max)">
+                            <input type="radio" name="class-select" class="rank-input" :value="rank.id" :checked="activeRank.id === rank.id">
+                            <img class="rank-image" :src="rank.image">
+                            <div class="rank-text">
+                                <div class="rank-title" v-html="rank.name"></div>
+                            </div>
+                        </label>
+                    </div>
                 </div>
             </div>
+
+
+            <!-- Tool Bar -->
+            <div class="container">
+                <div class="toolbar">
+                    <div class="highlight-fc">
+                        <span>Highlight FC:</span><input type="text" v-model="highlight_fc" placeholder="XXXX-YYYY-ZZZZ" @keyup.enter="searchFC()">
+                        <svg @click="searchFC()" xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><title>search_line</title><g id="search_line" fill='none' fill-rule='evenodd'><path d='M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z'/><path :fill="this.highlight_fc === '' ? '#616161' : '#ffffff'" d='M10.5 2a8.5 8.5 0 1 0 5.262 15.176l3.652 3.652a1 1 0 0 0 1.414-1.414l-3.652-3.652A8.5 8.5 0 0 0 10.5 2M4 10.5a6.5 6.5 0 1 1 13 0 6.5 6.5 0 0 1-13 0'/></g></svg>
+                    </div>
+                    <div class="last-refresh">
+                        <span>Last data refresh: </span>
+                        <span class="yellow-text" v-html="returnTime(this.last_refresh)"></span>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="settings-button" @click="openSettings()">
+                        <span>Settings</span>
+                        <img width="20" height="20" src="assets/sprites/GalaxyMushroom.png">
+                    </div>
+                </div>
+                <!-- <Transition> -->
+                <div class="settings-container" v-if="settings.open">
+                    <div class="setting"><input type="checkbox" v-model="settings.params.dark_mode">Dark mode</div>
+                    <div class="setting"><input type="range" min="25" max="500" v-model="settings.params.max_players">Max. players per table</div>
+                </div>
+                <!-- </Transition> -->
+            </div>
+
+            <!-- Table -->
             <div class="container table-container">
                     <table>
                         <th>Rank</th>
@@ -68,7 +90,7 @@
                         <th>Mii</th>
                         <th>Friendcode</th>
                         <th>Last Seen</th>
-                        <tr v-for="(p, index) in activeRank.players.filter((player, index) => index < 500)" :style="{ background: p.fc === highlight_fc ? '#5edd5f' : '' }">
+                        <tr v-for="(p, index) in activeRank.players.filter((player, index) => index < settings.params.max_players)" :style="{ background: p.fc === highlight_fc ? '#5edd5f' : '' }">
                             <td v-html="index + 1"></td>
                             <td><img width="32" height="32" :src="titleImage(p.ev)"></td>
                             <td v-html="p.ev"></td>
@@ -86,26 +108,6 @@
                         </div>
                         <img class="drybones" src="assets/characters/DryBones.webp">
                     </div>
-            </div>
-            <div class="rank-select container">
-                <img class="rank-select-background" src="assets/backgrounds/Eggplant.png">
-                <div class="rank-select-heading">
-                    <img class="star" src="assets/sprites/Star.webp">
-                    <h2>Filter by Rank</h2>
-                    <img class="star" src="assets/sprites/Star.webp">
-                </div>
-                <div class="grid">
-                    <div class="ranks" v-for="(rank, index) in ranks">
-                        <label :for="rank.id" @click="changeRank(index, rank.id, rank.range_min, rank.range_max)">
-                            <input type="radio" name="class-select" class="rank-input" :value="rank.id" :checked="activeRank.id === rank.id">
-                            <img class="rank-image" :src="rank.image">
-                            <div class="rank-text">
-                                <div class="rank-title" v-html="rank.name"></div>
-                                <div class="rank-vr">{{ rank.range_max }}<small>VR</small> - {{ rank.range_min }}<small>VR</small></div>
-                            </div>
-                        </label>
-                    </div>
-                </div>
             </div>
         </div>
     </body>

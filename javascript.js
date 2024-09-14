@@ -8,7 +8,8 @@ const vueApp = {
       settings: {
         open: false,
         params: {
-          night_mode: true,
+          dark_mode: true,
+          max_players: 100,
         },
       },
       players: [],
@@ -192,7 +193,7 @@ const vueApp = {
     },
 
     openSettings() {
-      this.settings.open = true;
+      this.settings.open = !this.settings.open;
       console.log("hello");
     },
   },
