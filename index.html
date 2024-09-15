@@ -116,15 +116,19 @@
                 <!-- FAQ -->
                  <div class="container">
                     <div class="faq-heading">
-                        FAQ
+                        <img width="32" src="assets/sprites/Block.webp">
+                        <span>FAQ</span>
+                        <img width="32" src="assets/sprites/Block.webp">
                     </div>
                     <div class="faq-container">
-                        <div class="faq-tab" v-for="(tab, index) in faq.tabs">
-                            <div class="accordion-heading" v-html="tab.heading" @click="toggleFAQ(index)"></div>
+                        <div class="faq-tab" v-for="(tab, index) in faq.tabs" @click="toggleFAQ(index)">
+                            <div class="accordion-heading" v-html="tab.heading"></div>
+                            <img width="24" :src="faq.open === index ? 'assets/characters/Boo.webp' : 'assets/characters/BooShy.webp'">
                             <div class="accordion">
                                 <div :class="{ 'accordion-content': true, 'accordion-open': faq.open === index }">
                                     <div class="faq-content-image">
-                                        <div class="tab-content" v-html="tab.content"></div>
+                                        <div class="faq-content" v-html="tab.content"></div>
+                                        <img :src="tab.image">
                                     </div>
                                 </div>
                             </div>

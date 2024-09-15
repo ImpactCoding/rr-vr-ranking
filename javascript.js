@@ -9,26 +9,30 @@ const vueApp = {
         open: "",
         tabs: [
           {
-            heading: "How can I get on the Leaderboard?",
+            heading: "How can I get on the leaderboard?",
             content:
               "To entry the leaderboard, you have to start your license at <b>5000 VR or lower</b> to avoid people hacking VR. Also, your VR progress will be tracked and you will get banned and end up in the <a href='hallOfShame.html'><b>Hall of Shame</b></a> if you manipulate your VR.",
+            image: "assets/characters/ToadCheepCharger.webp",
           },
           {
             heading:
               "Why am I not on the leaderboard even though I followed the rules?",
             content:
-              "Data refreshing might be delayed sometimes due to high traffic or other factors. This can potentially mess up the banning or entry creation system.<br>If your profile is not shown as it should, contact me <a href='https://discordapp.com/channels/@me/342736380163653633/'>here</a>.",
+              "Data refreshing might be delayed sometimes due to high traffic or other factors. This can potentially mess up the banning or entry creation system.<br><br>If your profile is not shown as it should, contact me <a href='https://discordapp.com/channels/@me/342736380163653633/' target='_blank'>here</a>.",
+            image: "assets/characters/Waluigi.webp",
           },
           {
             heading:
               "I can't highlight my FC event though I typed it correctly",
             content:
               "If your profile is ranked for the current rank you selected, the search field border will turn green. Make sure you remove white space or try the overall category. Also, try to set the maximum amount of players per table to 500 in settings.",
+            image: "assets/characters/DonkeyKong.webp",
           },
           {
             heading: "How does this page work?",
             content:
               "All data is collected from the Rooms API, stored and analysed by a script.",
+            image: "assets/sprites/Wii.webp",
           },
         ],
       },
