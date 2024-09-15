@@ -566,6 +566,7 @@ table {
 
 .container:has(.faq-container) {
   margin-top: 60px;
+  padding: 32px 24px;
 }
 
 .faq-container {
