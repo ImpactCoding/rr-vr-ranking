@@ -402,7 +402,6 @@ tr:nth-child(4) {
   padding: 0;
   position: relative;
   margin: auto;
-  min-height: 50px;
 }
 
 table {
@@ -411,9 +410,6 @@ table {
   text-align: center;
   border-collapse: collapse;
   margin: auto;
-
-  &:not(:has(td)) {
-    display: none;
 
     & + .no-players {
       display: flex;
