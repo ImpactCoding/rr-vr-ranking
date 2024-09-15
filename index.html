@@ -33,6 +33,7 @@
             <!-- Rank Select -->
             <div class="rank-select container">
                 <img class="rank-select-background" src="assets/backgrounds/Eggplant.png">
+                <div class="rank-help-wrapper">
                 <div class="rank-wrapper">
                     <img class="rank-image-big" :src="activeRank.image">
                     <div class="rank-wrapper-container">
@@ -40,6 +41,11 @@
                         <div class="vr-range-big">{{ activeRank.range_max }}VR - {{ activeRank.range_min }}VR</span></div>
                         <div class="player-count">Ranked Players: {{ playerCount }}</div>
                     </div>
+                </div>
+                <div class="help-link" @click="scrollToFAQ()">
+                    <img width="16" src="assets/sprites/Block.webp">
+                    <span class="yellow-text">Help</span>
+                </div>
                 </div>
                 <div class="grid">
                     <div class="ranks" v-for="(rank, index) in ranks">

@@ -1,5 +1,5 @@
 const vueApp = {
-  name: "Vue Schema Creator",
+  name: "Retro Rewind Live VR Ranking",
   data() {
     return {
       date: "",
@@ -31,7 +31,7 @@ const vueApp = {
           {
             heading: "How does this page work?",
             content:
-              "All data is collected from the Rooms API, stored and analysed by a script.",
+              "All data is collected from the Rooms API, stored and updated by a script.",
             image: "assets/sprites/Wii.webp",
           },
           {
@@ -260,6 +260,11 @@ const vueApp = {
       if (this.faq.open === i) {
         this.faq.open = "";
       } else this.faq.open = i;
+    },
+
+    scrollToFAQ() {
+      const faq = document.querySelector(".faq-heading");
+      faq.scrollIntoView({ behavior: "smooth" });
     },
   },
 

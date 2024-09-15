@@ -21,7 +21,7 @@ body {
 }
 
 .content {
-  max-width: 1000px;
+  max-width: 1200px;
   padding: 16px;
   margin: auto;
 }
@@ -261,6 +261,7 @@ h2 {
   margin-bottom: 16px;
   justify-content: space-between;
   align-items: center;
+  gap: 32px;
 }
 
 .rank-select-background {
@@ -269,16 +270,16 @@ h2 {
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.5;
+  /* opacity: 0.5; */
   object-fit: cover;
   z-index: 0;
-  filter: brightness(100%) blur(0px);
+  filter: brightness(80%) blur(0px);
   border-radius: 20px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 33.3%);
+  grid-template-columns: repeat(4, 25%);
   align-items: center;
   margin: -4px;
 }
@@ -297,29 +298,9 @@ hr {
   margin-bottom: 8px;
 }
 
-.help {
-  color: #8e8e8e;
-  font-size: smaller;
-  margin-top: auto;
-  transform: translateY(16px);
-  text-decoration: underline;
-
-  &:hover {
-    cursor: url("assets/cursors/Help-Select.png"), auto;
-  }
-
-  & span {
-    margin-left: 4px;
-  }
-
-  & svg {
-    transform: translateY(3px);
-  }
-}
-
 .rank-wrapper {
-  margin: 0px 32px;
   width: fit-content;
+  max-width: 280px;
   display: flex;
   gap: 20px;
   align-items: center;
@@ -336,8 +317,19 @@ hr {
   flex: none;
 }
 
+.rank-help-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: stretch;
+  height: 100%;
+  margin: auto;
+}
+
 .rank-image-big {
+  width: 80px;
   height: 80px;
+  object-fit: contain;
 }
 
 .rank-title-big {
@@ -355,6 +347,21 @@ hr {
 
 .player-count {
   opacity: 0.8;
+}
+
+.help-link {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  display: inline-flex;
+  gap: 4px;
+  margin-top: auto;
+  align-self: flex-start;
+  cursor: url("assets/cursors/Link-Select.png"), auto;
+
+  & span {
+    text-decoration: underline;
+  }
 }
 
 th {
@@ -510,6 +517,21 @@ table {
   justify-content: flex-end;
   align-items: center;
   gap: 16px;
+
+  & * {
+    position: relative;
+  }
+}
+
+.toolbar-background {
+  position: absolute;
+  left: 0%;
+  bottom: 0px;
+  height: 100%;
+  width: 100%;
+  border-radius: 20px;
+  filter: brightness(100%);
+  pointer-events: none;
 }
 
 .spacer {
@@ -544,6 +566,8 @@ table {
 }
 
 .container:has(.toolbar) {
+  background: url("assets/backgrounds/PowerUps.webp"), #000000;
+  background-size: 20%;
   &:after,
   &:before {
     content: "";
@@ -553,7 +577,7 @@ table {
     left: 20%;
     height: 16px;
     width: 5%;
-    background: #000000;
+    background: black;
     border: 2px solid black;
     box-shadow: inset 0px 0px 4px 0px #f7f7f7;
   }
