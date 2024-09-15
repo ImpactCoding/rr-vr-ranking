@@ -411,11 +411,6 @@ table {
   border-collapse: collapse;
   margin: auto;
 
-    & + .no-players {
-      display: flex;
-    }
-  }
-
   &:before {
     content: "";
     position: absolute;

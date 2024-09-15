@@ -105,7 +105,7 @@
                 </div>
 
                 <!-- No Players Ranked -->
-                    <div class="no-players container">
+                    <div class="no-players container" v-if="playerCount === 0">
                         <div class="no-players-text">
                             <h2>Seems like there is nobody listed for this rank right now...</h2>
                             <div>You can choose another rank or chill with <span class="drybones-color">Dry Bones</span> for a while!</div>
