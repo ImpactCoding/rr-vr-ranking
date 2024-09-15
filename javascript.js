@@ -11,7 +11,7 @@ const vueApp = {
           {
             heading: "How can I get on the leaderboard?",
             content:
-              "To entry the leaderboard, you have to start your license at <b>5000 VR or lower</b> to avoid people hacking VR. Also, your VR progress will be tracked and you will get banned and end up in the <a href='hallOfShame.html'><b>Hall of Shame</b></a> if you manipulate your VR.",
+              "To entry the leaderboard, you have to start your license at <span class='yellow-text'><b>5000 VR or lower</b></span> to avoid people hacking VR. Also, your VR progress will be tracked and you will get banned and end up in the <a href='hallOfShame.html'><b>Hall of Shame</b></a> if you manipulate your VR.",
             image: "assets/characters/ToadCheepCharger.webp",
           },
           {
@@ -25,7 +25,7 @@ const vueApp = {
             heading:
               "I can't highlight my FC event though I typed it correctly",
             content:
-              "If your profile is ranked for the current rank you selected, the search field border will turn green. Make sure you remove white space or try the overall category. Also, try to set the maximum amount of players per table to 500 in settings.",
+              "If your profile is ranked for the <span class='yellow-text'><b>current rank</b></span> you selected, the search field border will turn green. Make sure you remove white space or try the Overall category. Also, try to set the maximum amount of players per table to 500 in settings.",
             image: "assets/characters/DonkeyKong.webp",
           },
           {
@@ -33,6 +33,12 @@ const vueApp = {
             content:
               "All data is collected from the Rooms API, stored and analysed by a script.",
             image: "assets/sprites/Wii.webp",
+          },
+          {
+            heading: "Will there be new stuff added to the website?",
+            content:
+              "Yes, I have a couple ideas on my mind that I will try to integrate when I have time:<ul><li>Seasons: 1 Month time to gains as much VR as possible. Season results will be saved.</li><li>VR Tracking: VR progress of each player will be tracked and shown in a graph.</li></ul>",
+            image: "assets/characters/ThinkingMario.png",
           },
         ],
       },

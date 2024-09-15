@@ -272,7 +272,7 @@ h2 {
   opacity: 0.5;
   object-fit: cover;
   z-index: 0;
-  filter: blur(2px);
+  filter: brightness(100%) blur(0px);
   border-radius: 20px;
 }
 
@@ -624,11 +624,17 @@ table {
 
   & img {
     width: 140px;
+    max-height: 200px;
+    object-fit: contain;
   }
 }
 
 .faq-content {
   line-height: 1.6;
+
+  & ul {
+    font-size: small;
+  }
 }
 
 .accordion {
