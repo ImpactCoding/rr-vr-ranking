@@ -15,13 +15,12 @@ body {
   border-radius: 20px;
   background: #303030;
   box-shadow: inset 0px 0px 8px 0px #f7f7f7;
-  padding: 24px 24px;
   margin-bottom: 8px;
   position: relative;
 }
 
 .content {
-  max-width: 1200px;
+  max-width: 1000px;
   padding: 16px;
   margin: auto;
 }
@@ -257,11 +256,15 @@ h2 {
 
 .rank-select {
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1px 1.5fr;
   margin-bottom: 16px;
   justify-content: space-between;
-  align-items: center;
-  gap: 32px;
+  overflow: hidden;
+
+  & .spacer {
+    height: 100%;
+  }
 }
 
 .rank-select-background {
@@ -270,7 +273,6 @@ h2 {
   left: 0;
   width: 100%;
   height: 100%;
-  /* opacity: 0.5; */
   object-fit: cover;
   z-index: 0;
   filter: brightness(80%) blur(0px);
@@ -279,9 +281,10 @@ h2 {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 25%);
+  grid-template-columns: repeat(3, 33.3%);
   align-items: center;
   margin: -4px;
+  padding: 24px;
 }
 
 hr {
@@ -315,15 +318,16 @@ hr {
   position: relative;
   height: fit-content;
   flex: none;
+  margin: auto;
 }
 
 .rank-help-wrapper {
   display: flex;
+  padding: 24px;
   flex-direction: column;
-  align-items: center;
-  justify-content: stretch;
-  height: 100%;
-  margin: auto;
+  justify-content: space-between;
+  position: relative;
+  background: #000000b9;
 }
 
 .rank-image-big {
@@ -350,12 +354,8 @@ hr {
 }
 
 .help-link {
-  position: absolute;
-  bottom: 24px;
-  left: 24px;
-  display: inline-flex;
   gap: 4px;
-  margin-top: auto;
+  display: inline-flex;
   align-self: flex-start;
   cursor: url("assets/cursors/Link-Select.png"), auto;
 
@@ -537,6 +537,7 @@ table {
 .spacer {
   border-right: 1px solid #ffffff80;
   height: 30px;
+  position: relative;
 }
 
 .settings-button {
@@ -568,6 +569,7 @@ table {
 .container:has(.toolbar) {
   background: url("assets/backgrounds/PowerUps.webp"), #000000;
   background-size: 20%;
+  padding: 16px 24px;
   &:after,
   &:before {
     content: "";
