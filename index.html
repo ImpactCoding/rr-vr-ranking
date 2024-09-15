@@ -75,7 +75,7 @@
                 <div class="accordion settings-container">
                 <div :class="{ 'accordion-content': true, 'accordion-open': settings.open }">
                     <div class="setting"><input type="checkbox" v-model="settings.params.dark_mode" @change="setLocalStorage('dark_mode')">Dark mode</div>
-                    <div class="setting"><input type="range" min="10" max="500" step="10" v-model="settings.params.max_players" @change="setLocalStorage('max_players')">Max. players per table</div>
+                    <div class="setting"><input type="range" min="50" max="500" step="50" v-model="settings.params.max_players" @change="setLocalStorage('max_players')">Max. players per table</div>
                 </div>
                 </div>
             </div>
