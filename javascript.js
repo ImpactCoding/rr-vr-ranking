@@ -39,7 +39,6 @@ const vueApp = {
           max_players: localStorage.getItem("max_players") || 100,
         },
       },
-      players: [],
       ranks: [
         {
           name: "Overall",
