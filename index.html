@@ -106,7 +106,7 @@
                         <th>Friendcode</th>
                         <th>Last Seen</th>
                         <th>Max VR Date</th>
-                        <tr v-for="(p, index) in activeRank.players.filter((player, index) => index < settings.params.max_players)" :style="{ background: p.fc === highlight_fc ? '#5edd5f' : '' }">
+                        <tr v-for="(p, index) in activeRank.players.filter((player, index) => index < settings.params.max_players && player.banned !== true)" :style="{ background: p.fc === highlight_fc ? '#5edd5f' : '' }">
                             <td v-html="index + 1"></td>
                             <td><img width="32" height="32" :src="titleImage(p.ev)"></td>
                             <td v-html="p.ev"></td>
