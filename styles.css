@@ -13,8 +13,6 @@ body {
 .container {
   border: 2px solid black;
   border-radius: 20px;
-  background: #303030;
-  box-shadow: inset 0px 0px 8px 0px #f7f7f7;
   margin-bottom: 8px;
   position: relative;
 }
@@ -265,6 +263,20 @@ h2 {
   & .spacer {
     height: 100%;
   }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 0px);
+    height: calc(100% - 0px);
+    margin: 0px;
+    z-index: 1;
+    border-radius: 16px;
+    box-shadow: inset 0px 0px 8px 0px #f7f7f7;
+    pointer-events: none;
+  }
 }
 
 .rank-select-background {
@@ -276,7 +288,6 @@ h2 {
   object-fit: cover;
   z-index: 0;
   filter: brightness(80%) blur(0px);
-  border-radius: 20px;
 }
 
 .grid {
@@ -285,6 +296,8 @@ h2 {
   align-items: center;
   margin: -4px;
   padding: 24px;
+  position: relative;
+  border-left: 1px solid #ffffff80;
 }
 
 hr {
@@ -327,7 +340,8 @@ hr {
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  background: #000000b9;
+  background: #000000d8;
+  backdrop-filter: blur(6px);
 }
 
 .rank-image-big {
@@ -511,11 +525,29 @@ table {
 .last-refresh {
 }
 
+.toolbar-container {
+  overflow: hidden;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 0px);
+    height: calc(100% - 0px);
+    margin: 0px;
+    z-index: 1;
+    border-radius: 16px;
+    box-shadow: inset 0px 0px 8px 0px #f7f7f7;
+    pointer-events: none;
+  }
+}
+
 .toolbar {
   display: flex;
   grid-template-columns: 1fr 1fr 1fr;
   justify-content: flex-end;
   align-items: center;
+  padding: 16px 24px;
   gap: 16px;
 
   & * {
@@ -546,7 +578,6 @@ table {
   gap: 8px;
   padding: 8px 16px;
   border-radius: 8px;
-  background: black;
   border: 1px solid #8e8e8e;
   box-shadow: inset 0px 0px 8px 0px #8e8e8e;
   font-size: small;
@@ -560,6 +591,11 @@ table {
 }
 
 .settings-container {
+  border-top: 1px dashed #ffffff80;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 40px;
 }
 
 .yellow-text {
@@ -569,30 +605,13 @@ table {
 .container:has(.toolbar) {
   background: url("assets/backgrounds/PowerUps.webp"), #000000;
   background-size: 20%;
-  padding: 16px 24px;
-  &:after,
-  &:before {
-    content: "";
-    position: absolute;
-    top: calc(100% - 8px);
-    z-index: -1;
-    left: 20%;
-    height: 16px;
-    width: 5%;
-    background: black;
-    border: 2px solid black;
-    box-shadow: inset 0px 0px 4px 0px #f7f7f7;
-  }
-
-  &:before {
-    right: 20%;
-    left: auto;
-  }
+  padding: 0;
 }
 
 .container:has(.faq-container) {
   margin-top: 60px;
   padding: 32px 24px;
+  background: #303030;
 }
 
 .faq-container {
@@ -685,10 +704,85 @@ table {
 
 .accordion-content {
   min-height: 0;
-  transition: visibility 0.5s, margin-top 0.5s;
+  transition: visibility 0.5s, opacity 0.5s 0.5s;
   visibility: hidden;
+  opacity: 0;
+  background: black;
 }
 
 .accordion-open {
   visibility: visible;
+  opacity: 1;
+  transition: visibility 0.5s, opacity 0.5s 0.3s;
+}
+
+.setting:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.setting input[type="checkbox"] {
+  display: none;
+}
+
+.setting label {
+  display: inline-flex;
+  gap: 8px;
+  cursor: url("assets/cursors/Link-Select.png"), auto;
+}
+
+.setting .custom-checkbox {
+  height: 16px;
+  width: 16px;
+  background: black;
+  border-radius: 4px;
+  border: 1px solid #ffffff80;
+  position: relative;
+
+  & img {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+  }
+}
+
+.setting:has(input:checked) .custom-checkbox img {
+  opacity: 1;
+}
+
+.setting input[type="range"] {
+  -webkit-appearance: none;
+  height: 6px;
+  width: 80px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(95, 95, 95, 1) 100%
+  );
+  border: 1px solid #f7f7f780;
+  outline: none;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  margin-bottom: 8px;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: url("assets/sprites/Star.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  &::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+  }
 }

@@ -270,13 +270,13 @@ const vueApp = {
 
   created() {
     this.changeRank(0);
-    console.log(localStorage);
   },
 
   mounted() {
     this.refreshData();
     setInterval(this.refreshData, 60000);
     this.highlight_fc = localStorage.getItem("rrfc");
+    this.checkInput();
   },
 
   watch: {
