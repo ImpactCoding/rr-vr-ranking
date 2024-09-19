@@ -5,6 +5,9 @@ const vueApp = {
       date: "",
       last_refresh: "",
       highlight_fc: "",
+      banned: [],
+      players: [],
+      last_seen: [],
       faq: {
         open: "",
         tabs: [
@@ -47,6 +50,7 @@ const vueApp = {
         params: {
           dark_mode: localStorage.getItem("dark_mode"),
           max_players: localStorage.getItem("max_players") || 100,
+          sort_by_last_seen: localStorage.getItem("sort_by_last_seen"),
         },
       },
       ranks: [
@@ -56,31 +60,31 @@ const vueApp = {
           range_min: 1,
           range_max: 30000,
           players: [],
-          image: "assets/ranks/Overall.png",
+          image: "assets/ranks/Flag.webp",
         },
         {
           name: "Rewind Grandmaster",
           id: "rewind-grandmaster",
-          range_min: 28000,
+          range_min: 29000,
           range_max: 30000,
           players: [],
-          image: "assets/ranks/RewindGrandmaster.png",
+          image: "assets/ranks/crown.png",
         },
         {
           name: "Rewind Master",
           id: "rewind-master",
-          range_min: 25000,
-          range_max: 27999,
+          range_min: 26000,
+          range_max: 28999,
           players: [],
-          image: "assets/ranks/RewindMaster.png",
+          image: "assets/ranks/3star.png",
         },
         {
           name: "Rewind Veteran",
           id: "rewind-veteran",
           range_min: 22000,
-          range_max: 24999,
+          range_max: 25999,
           players: [],
-          image: "assets/ranks/RewindVeteran.png",
+          image: "assets/ranks/2star.png",
         },
         {
           name: "Rewind Elite",
@@ -88,7 +92,7 @@ const vueApp = {
           range_min: 20000,
           range_max: 21999,
           players: [],
-          image: "assets/ranks/RewindElite.png",
+          image: "assets/ranks/1star.png",
         },
         {
           name: "Rewind",
@@ -96,47 +100,47 @@ const vueApp = {
           range_min: 18000,
           range_max: 19999,
           players: [],
-          image: "assets/ranks/Rewind.png",
-        },
-        {
-          name: "Class S",
-          id: "class-s",
-          range_min: 15000,
-          range_max: 17999,
-          players: [],
-          image: "assets/ranks/Sclass.png",
+          image: "assets/ranks/goldwheel.png",
         },
         {
           name: "Class A",
           id: "class-a",
-          range_min: 12000,
-          range_max: 14999,
+          range_min: 15000,
+          range_max: 17999,
           players: [],
-          image: "assets/ranks/Aclass.png",
+          image: "assets/ranks/rank A.png",
         },
         {
           name: "Class B",
           id: "class-b",
-          range_min: 10000,
-          range_max: 11999,
+          range_min: 12000,
+          range_max: 14999,
           players: [],
-          image: "assets/ranks/Bclass.png",
+          image: "assets/ranks/rank B.png",
         },
         {
           name: "Class C",
           id: "class-c",
-          range_min: 8000,
-          range_max: 9999,
+          range_min: 10000,
+          range_max: 11999,
           players: [],
-          image: "assets/ranks/Cclass.png",
+          image: "assets/ranks/rank C.png",
         },
         {
           name: "Class D",
           id: "class-d",
+          range_min: 8000,
+          range_max: 9999,
+          players: [],
+          image: "assets/ranks/rank D.png",
+        },
+        {
+          name: "Class E",
+          id: "class-e",
           range_min: 6000,
           range_max: 7999,
           players: [],
-          image: "assets/ranks/Dclass.png",
+          image: "assets/ranks/rank E.png",
         },
         {
           name: "Learner's Permit",
@@ -144,7 +148,7 @@ const vueApp = {
           range_min: 1,
           range_max: 5999,
           players: [],
-          image: "assets/ranks/Learner.png",
+          image: "assets/ranks/wheel .png",
         },
       ],
       activeRank: {
@@ -164,38 +168,50 @@ const vueApp = {
       );
       const playerData = await response.json();
       this.last_refresh = playerData.last_refresh;
+      delete playerData.last_refresh;
       this.date = Date.now();
       this.players = [];
+      this.banned = [];
+
+      let playerArray = [];
       for (player in playerData) {
-        this.players.push(playerData[player]);
+        if (playerData[player].banned === true) {
+          this.banned.push(playerData[player]);
+        } else {
+          playerArray.push(playerData[player]);
+        }
       }
 
-      // Sort the players array by ev value in descending order
-      this.players.sort((a, b) => {
+      const vr_array = [...playerArray];
+      const last_seen_array = [...playerArray];
+
+      vr_array.sort((a, b) => {
         return parseInt(b.ev, 10) - parseInt(a.ev, 10); // Sort by ev descending
       });
 
-      this.ranks.forEach((rank) => {
-        rank.players = this.players.filter(
-          (p) => p.ev >= rank.range_min && p.ev <= rank.range_max
-        );
+      this.players = vr_array;
+
+      last_seen_array.sort((a, b) => {
+        return b.lastupdated - a.lastupdated; // Sort by last seen descending
       });
+
+      this.last_seen = last_seen_array;
+
+      this.changeSorting(this.settings.params.sort_by_last_seen);
     },
 
     titleImage(VR) {
-      if (VR < 6000) return "assets/ranks/Learner.png";
-      else if (VR >= 6000 && VR < 8000) return "assets/ranks/Dclass.png";
-      else if (VR >= 8000 && VR < 10000) return "assets/ranks/Cclass.png";
-      else if (VR >= 10000 && VR < 12000) return "assets/ranks/Bclass.png";
-      else if (VR >= 12000 && VR < 15000) return "assets/ranks/Aclass.png";
-      else if (VR >= 15000 && VR < 18000) return "assets/ranks/Sclass.png";
-      else if (VR >= 18000 && VR < 20000) return "assets/ranks/Rewind.png";
-      else if (VR >= 20000 && VR < 22000) return "assets/ranks/RewindElite.png";
-      else if (VR >= 22000 && VR < 25000)
-        return "assets/ranks/RewindVeteran.png";
-      else if (VR >= 25000 && VR < 28000)
-        return "assets/ranks/RewindMaster.png";
-      else return "assets/ranks/RewindGrandmaster.png";
+      if (VR < 6000) return "assets/ranks/wheel .png";
+      else if (VR >= 6000 && VR < 8000) return "assets/ranks/rank E.png";
+      else if (VR >= 8000 && VR < 10000) return "assets/ranks/rank D.png";
+      else if (VR >= 10000 && VR < 12000) return "assets/ranks/rank C.png";
+      else if (VR >= 12000 && VR < 15000) return "assets/ranks/rank B.png";
+      else if (VR >= 15000 && VR < 18000) return "assets/ranks/rank A.png";
+      else if (VR >= 18000 && VR < 20000) return "assets/ranks/goldwheel.png";
+      else if (VR >= 20000 && VR < 22000) return "assets/ranks/1star.png";
+      else if (VR >= 22000 && VR < 26000) return "assets/ranks/2star.png";
+      else if (VR >= 26000 && VR < 29000) return "assets/ranks/3star.png";
+      else return "assets/ranks/crown.png";
     },
 
     changeRank(index) {
@@ -240,15 +256,17 @@ const vueApp = {
     },
 
     checkInput() {
+      let fcFound = false;
       this.activeRank.players.forEach((player) => {
         if (this.highlight_fc === player.fc) {
           document.querySelector(".highlight-fc input").style.border =
             "1px solid #5edd5f";
-          exit;
+          fcFound = true;
         }
       });
-      document.querySelector(".highlight-fc input").style.border =
-        "1px solid #c90000";
+      if (fcFound == false)
+        document.querySelector(".highlight-fc input").style.border =
+          "1px solid #c90000";
     },
 
     setLocalStorage(item) {
@@ -266,10 +284,28 @@ const vueApp = {
       const faq = document.querySelector(".faq-heading");
       faq.scrollIntoView({ behavior: "smooth" });
     },
+
+    changeSorting(sort_by_last_seen) {
+      if (sort_by_last_seen == true || sort_by_last_seen == "true") {
+        this.ranks.forEach((rank) => {
+          rank.players = this.last_seen.filter(
+            (p) => p.ev >= rank.range_min && p.ev <= rank.range_max
+          );
+        });
+      } else {
+        this.ranks.forEach((rank) => {
+          rank.players = this.players.filter(
+            (p) => p.ev >= rank.range_min && p.ev <= rank.range_max
+          );
+        });
+      }
+    },
   },
 
   created() {
     this.changeRank(0);
+    this.settings.params.sort_by_last_seen =
+      localStorage.getItem("sort_by_last_seen");
   },
 
   mounted() {
@@ -288,6 +324,18 @@ const vueApp = {
   computed: {
     playerCount() {
       return this.activeRank.players.length;
+    },
+
+    firstName() {
+      if (this.activeRank.players[0]) {
+        if (this.activeRank.players[0].name === "no name") {
+          return "Player";
+        } else {
+          return this.activeRank.players[0].name;
+        }
+      } else {
+        return "";
+      }
     },
   },
 };

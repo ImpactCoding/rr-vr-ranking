@@ -1,159 +1,276 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Retro Rewind Live VR Ranking</title>
-        <link rel="icon" type="image/x-icon" href="assets/favicon/RRLogo.png">
-        <meta charset="utf-8">
-        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-        <script src="javascript.js"></script>
-        <link href="https://www.chadsoft.co.uk/css/ctmkf.css" rel="Stylesheet" type="text/css" />
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-        <div class="rr-rooms">
-            <!-- Header -->
-        <div class="header-placeholder"></div>
-        <div class="header">
-            <div class="logo-container">
-                <img class="logo" src="assets/sprites/RetroRewindLogo.png">
-                <div class="logo-addition">Live VR Ranking</div>
-            </div>         
+  <head>
+    <title>Retro Rewind Live VR Ranking</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon/RRLogo.png" />
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="javascript.js"></script>
+    <link
+      href="https://www.chadsoft.co.uk/css/ctmkf.css"
+      rel="Stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="rr-rooms">
+      <!-- Header -->
+      <div class="header-placeholder"></div>
+      <div class="header">
+        <div class="logo-container">
+          <img class="logo" src="assets/sprites/RetroRewindLogo.png" />
+          <div class="logo-addition">Live VR Ranking</div>
         </div>
+      </div>
 
-        <!-- Background -->
-        <div class="background">
-            <img :class="{'background-image': true, 'night_mode': settings.params.dark_mode === true || settings.params.dark_mode === 'true' }"  src="assets/backgrounds/retro_rewind_background.png">
-            <img class="donkeykong" src="assets/characters/DonkeyKong.webp">
-            <img class="peach" src="assets/characters/Peach.webp">
-        </div>
+      <!-- Background -->
+      <div class="background">
+        <img
+          :class="{'background-image': true, 'night_mode': settings.params.dark_mode === true || settings.params.dark_mode === 'true' }"
+          src="assets/backgrounds/retro_rewind_background.png"
+        />
+        <img class="donkeykong" src="assets/characters/DonkeyKong.webp" />
+        <img class="peach" src="assets/characters/Peach.webp" />
+      </div>
 
-        <!-- Start of content -->
-        <div class="content">
-
-            <!-- Rank Select -->
-            <div class="rank-select container">
-                <div class="rank-help-wrapper">
-                <div class="rank-wrapper">
-                    <img class="rank-image-big" :src="activeRank.image">
-                    <div class="rank-wrapper-container">
-                        <h2 class="rank-title-big" v-html="activeRank.name"></h2>
-                        <div class="vr-range-big">{{ activeRank.range_max }}VR - {{ activeRank.range_min }}VR</span></div>
-                        <div class="player-count">Ranked Players: {{ playerCount }}</div>
-                    </div>
+      <!-- Start of content -->
+      <div class="content">
+        <!-- Rank Select -->
+        <div class="rank-select container">
+          <div class="rank-help-wrapper">
+            <div class="rank-image-title">
+              <img class="rank-image-big" :src="activeRank.image" />
+              <h2 class="rank-title-big" v-html="activeRank.name"></h2>
+            </div>
+            <div class="rank-info">
+              <div class="vr-range-big">
+                Range:
+                <b
+                  >{{ activeRank.range_max }}VR - {{ activeRank.range_min
+                  }}VR</b
+                >
+              </div>
+              <div class="player-count">
+                Ranked Players: <b>{{ playerCount }}</b>
+              </div>
+              <div class="leader">
+                <span>Leader: </span>
+                <div class="leader-box">
+                  <img
+                    width="24"
+                    :src="miiImage(activeRank.players[0] || '')"
+                  />
+                  <span v-html="firstName"></span>
                 </div>
                 <div class="help-link" @click="scrollToFAQ()">
-                    <img width="16" src="assets/sprites/Block.webp">
-                    <span class="yellow-text">Help</span>
+                  <img width="16" src="assets/sprites/Block.webp" />
+                  <span class="yellow-text">Help</span>
                 </div>
-                </div>
-                <div class="spacer"></div>
-                <div class="grid">
-                    <img class="rank-select-background" src="assets/backgrounds/Eggplant.png">
-                    <div class="ranks" v-for="(rank, index) in ranks">
-                        <label :for="rank.id" @click="changeRank(index, rank.id, rank.range_min, rank.range_max)">
-                            <input type="radio" name="class-select" class="rank-input" :value="rank.id" :checked="activeRank.id === rank.id">
-                            <img class="rank-image" :src="rank.image">
-                            <div class="rank-text">
-                                <div class="rank-title" v-html="rank.name"></div>
-                            </div>
-                        </label>
-                    </div>
-                </div>
+              </div>
             </div>
-
-
-            <!-- Tool Bar -->
-            <div class="container toolbar-container">
-                <div class="toolbar">
-                    <div class="highlight-fc">
-                        <span>Highlight FC:</span><input type="text" v-model="highlight_fc" placeholder="XXXX-YYYY-ZZZZ" @keyup.enter="searchFC()" @input="checkInput()">
-                        <svg @click="searchFC()" xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><title>search_line</title><g id="search_line" fill='none' fill-rule='evenodd'><path d='M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z'/><path :fill="this.highlight_fc === '' ? '#616161' : '#ffffff'" d='M10.5 2a8.5 8.5 0 1 0 5.262 15.176l3.652 3.652a1 1 0 0 0 1.414-1.414l-3.652-3.652A8.5 8.5 0 0 0 10.5 2M4 10.5a6.5 6.5 0 1 1 13 0 6.5 6.5 0 0 1-13 0'/></g></svg>
-                    </div>
-                    <div class="last-refresh">
-                        <span>Last data refresh: </span>
-                        <span class="yellow-text" v-html="returnTime(this.last_refresh)"></span>
-                    </div>
-                    <div class="spacer"></div>
-                    <div class="settings-button" @click="openSettings()">
-                        <span>Settings</span>
-                        <img width="20" height="20" src="assets/sprites/GalaxyMushroom.png">
-                    </div>
+          </div>
+          <div class="spacer"></div>
+          <div class="grid">
+            <img
+              class="rank-select-background"
+              src="assets/backgrounds/RainbowRoad.png"
+            />
+            <div class="ranks" v-for="(rank, index) in ranks">
+              <label
+                :for="rank.id"
+                @click="changeRank(index, rank.id, rank.range_min, rank.range_max)"
+              >
+                <input
+                  type="radio"
+                  name="class-select"
+                  class="rank-input"
+                  :value="rank.id"
+                  :checked="activeRank.id === rank.id"
+                />
+                <img class="rank-image" :src="rank.image" />
+                <div class="rank-text">
+                  <div class="rank-title" v-html="rank.name"></div>
                 </div>
-                <div class="accordion">
-                <div :class="{ 'accordion-content': true, 'accordion-open': settings.open }">
-                    <div class="settings-container">
-                    <div class="setting">
-                    <label for="dark-mode">
-                        <input type="checkbox" v-model="settings.params.dark_mode" id="dark-mode" @change="setLocalStorage('dark_mode')">
-                        <div class="custom-checkbox"><img width="14" src="assets/sprites/check_fill.svg"></div>
-                        <span>Dark mode</span>
-                    </label>
-                    </div>
-                    <div class="setting">Max. <b>{{ settings.params.max_players }}</b> players per table<br><input type="range" min="50" max="500" step="50" v-model="settings.params.max_players" @change="setLocalStorage('max_players')"></div>
-                </div>
-                </div>
-                </div>
+              </label>
             </div>
-
-            <!-- Table -->
-            <div class="container table-container">
-                    <table>
-                        <th>Rank</th>
-                        <th>Title</th>
-                        <th>VR</th>
-                        <th>Name</th>
-                        <th>Mii</th>
-                        <th>Friendcode</th>
-                        <th>Last Seen</th>
-                        <th>Max VR Date</th>
-                        <tr v-for="(p, index) in activeRank.players.filter((player, index) => index < settings.params.max_players && player.banned !== true)" :style="{ background: p.fc === highlight_fc ? '#5edd5f' : '' }">
-                            <td v-html="index + 1"></td>
-                            <td><img width="32" height="32" :src="titleImage(p.ev)"></td>
-                            <td v-html="p.ev"></td>
-                            <td class="mii-name" v-html="p.name === 'no name' ? 'Player' : p.name"></td>
-                            <td><img width="32" height="32" :src="miiImage(p)"></td>
-                            <td v-html="p.fc"></td>
-                            <td v-html="returnTime(p.lastupdated)"></td>
-                            <td v-html="returnDate(p.first_max_vr)"></td>
-                        </tr>
-                    </table>
-                </div>
-
-                <!-- No Players Ranked -->
-                    <div class="no-players container" v-if="playerCount === 0">
-                        <div class="no-players-text">
-                            <h2>Seems like there is nobody listed for this rank right now...</h2>
-                            <div>You can choose another rank or chill with <span class="drybones-color">Dry Bones</span> for a while!</div>
-                        </div>
-                        <img class="drybones" src="assets/characters/DryBones.webp">
-                    </div>
-
-                <!-- FAQ -->
-                 <div class="container">
-                    <div class="faq-heading">
-                        <img width="32" src="assets/sprites/Block.webp">
-                        <span>FAQ</span>
-                        <img width="32" src="assets/sprites/Block.webp">
-                    </div>
-                    <div class="faq-container">
-                        <div class="faq-tab" v-for="(tab, index) in faq.tabs" @click="toggleFAQ(index)">
-                            <div class="accordion-heading" v-html="tab.heading"></div>
-                            <img width="24" :src="faq.open === index ? 'assets/characters/Boo.webp' : 'assets/characters/BooShy.webp'">
-                            <div class="accordion">
-                                <div :class="{ 'accordion-content': true, 'accordion-open': faq.open === index }">
-                                    <div class="faq-content-image">
-                                        <div class="faq-content" v-html="tab.content"></div>
-                                        <img :src="tab.image">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                 </div>
-            </div>
+          </div>
         </div>
-    </body>
-    <footer>
-    
-    </footer>
+
+        <!-- Tool Bar -->
+        <div class="container toolbar-container">
+          <div class="toolbar">
+            <div class="highlight-fc">
+              <span>Highlight FC:</span
+              ><input
+                type="text"
+                v-model="highlight_fc"
+                placeholder="XXXX-YYYY-ZZZZ"
+                @keyup.enter="searchFC()"
+                @input="checkInput()"
+              />
+              <svg
+                @click="searchFC()"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <title>search_line</title>
+                <g id="search_line" fill="none" fill-rule="evenodd">
+                  <path
+                    d="M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z"
+                  />
+                  <path
+                    :fill="this.highlight_fc === '' ? '#616161' : '#ffffff'"
+                    d="M10.5 2a8.5 8.5 0 1 0 5.262 15.176l3.652 3.652a1 1 0 0 0 1.414-1.414l-3.652-3.652A8.5 8.5 0 0 0 10.5 2M4 10.5a6.5 6.5 0 1 1 13 0 6.5 6.5 0 0 1-13 0"
+                  />
+                </g>
+              </svg>
+            </div>
+            <div class="last-refresh">
+              <span>Last data refresh: </span>
+              <span
+                class="yellow-text"
+                v-html="returnTime(this.last_refresh)"
+              ></span>
+            </div>
+            <div class="spacer"></div>
+            <div class="settings-button" @click="openSettings()">
+              <span>Settings</span>
+              <img
+                width="20"
+                height="20"
+                src="assets/sprites/GalaxyMushroom.png"
+              />
+            </div>
+          </div>
+          <div class="accordion">
+            <div
+              :class="{ 'accordion-content': true, 'accordion-open': settings.open }"
+            >
+              <div class="settings-container">
+                <div class="setting">
+                  <label for="dark-mode">
+                    <input
+                      type="checkbox"
+                      v-model="settings.params.dark_mode"
+                      id="dark-mode"
+                      @change="setLocalStorage('dark_mode')"
+                    />
+                    <div class="custom-checkbox">
+                      <img width="14" src="assets/sprites/check_fill.svg" />
+                    </div>
+                    <span>Dark mode</span>
+                  </label>
+                </div>
+                <div class="setting">
+                  Max. <b>{{ settings.params.max_players }}</b> players per
+                  table<br /><input
+                    type="range"
+                    min="50"
+                    max="500"
+                    step="50"
+                    v-model="settings.params.max_players"
+                    @change="setLocalStorage('max_players')"
+                  />
+                </div>
+                <div class="setting">
+                  <label for="sort-by-last-seen">
+                    <input
+                      type="checkbox"
+                      v-model="settings.params.sort_by_last_seen"
+                      id="sort-by-last-seen"
+                      @change="setLocalStorage('sort_by_last_seen'); changeSorting(this.settings.params.sort_by_last_seen)"
+                    />
+                    <div class="custom-checkbox">
+                      <img width="14" src="assets/sprites/check_fill.svg" />
+                    </div>
+                    <span>Sort by last seen</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="container table-container">
+          <table>
+            <th>Rank</th>
+            <th>Title</th>
+            <th>VR</th>
+            <th>Name</th>
+            <th>Mii</th>
+            <th>Friendcode</th>
+            <th>Last Seen</th>
+            <th>Max VR Date</th>
+            <tr
+              v-for="(p, index) in activeRank.players.filter((player, index) => index < settings.params.max_players && player.banned !== true)"
+              :style="{ background: p.fc === highlight_fc ? '#5edd5f' : '' }"
+            >
+              <td v-html="index + 1"></td>
+              <td><img width="24" height="24" :src="titleImage(p.ev)" /></td>
+              <td v-html="p.ev"></td>
+              <td
+                class="mii-name"
+                v-html="p.name === 'no name' ? 'Player' : p.name"
+              ></td>
+              <td><img width="32" height="32" :src="miiImage(p)" /></td>
+              <td v-html="p.fc"></td>
+              <td v-html="returnTime(p.lastupdated)"></td>
+              <td v-html="returnDate(p.first_max_vr)"></td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- No Players Ranked -->
+        <div class="no-players container" v-if="playerCount === 0">
+          <div class="no-players-text">
+            <h2>
+              Seems like there is nobody listed for this rank right now...
+            </h2>
+            <div>
+              You can choose another rank or chill with
+              <span class="drybones-color">Dry Bones</span> for a while!
+            </div>
+          </div>
+          <img class="drybones" src="assets/characters/DryBones.webp" />
+        </div>
+
+        <!-- FAQ -->
+        <div class="container">
+          <div class="faq-heading">
+            <img width="32" src="assets/sprites/Block.webp" />
+            <span>FAQ</span>
+            <img width="32" src="assets/sprites/Block.webp" />
+          </div>
+          <div class="faq-container">
+            <div
+              class="faq-tab"
+              v-for="(tab, index) in faq.tabs"
+              @click="toggleFAQ(index)"
+            >
+              <div class="accordion-heading" v-html="tab.heading"></div>
+              <img
+                width="24"
+                :src="faq.open === index ? 'assets/characters/Boo.webp' : 'assets/characters/BooShy.webp'"
+              />
+              <div class="accordion">
+                <div
+                  :class="{ 'accordion-content': true, 'accordion-open': faq.open === index }"
+                >
+                  <div class="faq-content-image">
+                    <div class="faq-content" v-html="tab.content"></div>
+                    <img :src="tab.image" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer></footer>
 </html>
