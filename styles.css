@@ -326,6 +326,10 @@ hr {
   padding: 8px 24px;
 }
 
+.leader-help {
+  display: flex;
+}
+
 .leader {
   display: flex;
   align-items: center;
@@ -333,7 +337,7 @@ hr {
   color: #dddddd;
 }
 
-.leader-box {
+.leader .leader-box {
   background: #404040;
   display: flex;
   align-items: center;

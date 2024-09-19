@@ -54,8 +54,10 @@
               <div class="player-count">
                 Ranked Players: <b>{{ playerCount }}</b>
               </div>
-              <div class="leader">
-                <span>Leader: </span>
+              <div
+                class="leader-help">
+                <div class="leader" :style="{ opacity: settings.params.sort_by_last_seen === false || settings.params.sort_by_last_seen === 'false' ? 1 : 0 }">
+                  <span>Leader: </span>
                 <div class="leader-box">
                   <img
                     width="24"
@@ -63,6 +65,8 @@
                   />
                   <span v-html="firstName"></span>
                 </div>
+                </div>
+              </span>
                 <div class="help-link" @click="scrollToFAQ()">
                   <img width="16" src="assets/sprites/Block.webp" />
                   <span class="yellow-text">Help</span>
