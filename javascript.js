@@ -14,7 +14,7 @@ const vueApp = {
           {
             heading: "How can I get on the leaderboard?",
             content:
-              "To entry the leaderboard, you have to start your license at <span class='yellow-text'><b>5000 VR or lower</b></span> to avoid people hacking VR. Also, your VR progress will be tracked and you will get banned and end up in the <a href='hallOfShame.html'><b>Hall of Shame</b></a> if you manipulate your VR.",
+              "To entry the leaderboard, you have to start your license at <span class='yellow-text'><b>10000 VR or lower</b></span> to avoid people hacking VR. Also, your VR progress will be tracked and you will get banned and end up in the <a href='hallOfShame.html'><b>Hall of Shame</b></a> if you manipulate your VR.",
             image: "assets/characters/ToadCheepCharger.webp",
           },
           {
