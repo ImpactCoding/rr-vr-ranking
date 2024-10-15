@@ -221,8 +221,9 @@ const vueApp = {
 
     miiImage(player) {
       if (player.mii) {
-        if (player.mii[0].data.includes("base64")) return player.mii[0].data;
-        else return "assets/sprites/questionMark.png";
+        if (player.mii[0].data) {
+          if (player.mii[0].data.includes("base64")) return player.mii[0].data;
+        } else return "assets/sprites/questionMark.png";
       } else return "assets/sprites/questionMark.png";
     },
 
